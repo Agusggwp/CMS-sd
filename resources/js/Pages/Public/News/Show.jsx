@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from '@inertiajs/react';
 import PublicLayout from '@/Layouts/PublicLayout';
+import Reveal from '@/Components/UI/Reveal';
 import { Calendar, User, Eye, ArrowLeft, Share2, Tag } from 'lucide-react';
 
 export default function Show({ article, relatedNews = [], categories = [] }) {
@@ -38,56 +39,62 @@ export default function Show({ article, relatedNews = [], categories = [] }) {
                     <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
                         {/* Main Article (8 columns) */}
                         <article className="lg:col-span-8 space-y-6">
-                            {/* Category & Date */}
-                            <div className="flex flex-wrap items-center gap-3 text-xs text-slate-500">
-                                {article.category && (
-                                    <span className="px-3 py-1 rounded-full bg-blue-50 text-blue-700 font-semibold border border-blue-200">
-                                        {article.category.name}
-                                    </span>
-                                )}
-                                <span className="flex items-center gap-1">
-                                    <Calendar className="w-3.5 h-3.5" />
-                                    {formattedDate}
-                                </span>
-                                {article.author && (
+                            <Reveal animation="fade-in-up">
+                                {/* Category & Date */}
+                                <div className="flex flex-wrap items-center gap-3 text-xs text-slate-500">
+                                    {article.category && (
+                                        <span className="px-3 py-1 rounded-full bg-blue-50 text-blue-700 font-semibold border border-blue-200">
+                                            {article.category.name}
+                                        </span>
+                                    )}
                                     <span className="flex items-center gap-1">
-                                        <User className="w-3.5 h-3.5" />
-                                        Oleh: {article.author.name}
+                                        <Calendar className="w-3.5 h-3.5" />
+                                        {formattedDate}
                                     </span>
-                                )}
-                                <span className="flex items-center gap-1">
-                                    <Eye className="w-3.5 h-3.5" />
-                                    {article.views} kali dilihat
-                                </span>
-                            </div>
+                                    {article.author && (
+                                        <span className="flex items-center gap-1">
+                                            <User className="w-3.5 h-3.5" />
+                                            Oleh: {article.author.name}
+                                        </span>
+                                    )}
+                                    <span className="flex items-center gap-1">
+                                        <Eye className="w-3.5 h-3.5" />
+                                        {article.views} kali dilihat
+                                    </span>
+                                </div>
 
-                            {/* Headline */}
-                            <h1 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight">
-                                {article.title}
-                            </h1>
+                                {/* Headline */}
+                                <h1 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight mt-4">
+                                    {article.title}
+                                </h1>
+                            </Reveal>
 
                             {/* Featured Image */}
                             {article.image && (
-                                <div className="rounded-2xl overflow-hidden bg-slate-100 shadow-md">
-                                    <img
-                                        src={article.image}
-                                        alt={article.title}
-                                        className="w-full max-h-[480px] object-cover"
-                                    />
-                                </div>
+                                <Reveal animation="fade-in-up" delay={100}>
+                                    <div className="rounded-2xl overflow-hidden bg-slate-100 shadow-md">
+                                        <img
+                                            src={article.image}
+                                            alt={article.title}
+                                            className="w-full max-h-[480px] object-cover hover:scale-102 transition-transform duration-500"
+                                        />
+                                    </div>
+                                </Reveal>
                             )}
 
                             {/* Body Content */}
-                            <div
-                                className="prose prose-slate max-w-none text-slate-700 text-sm sm:text-base leading-relaxed space-y-4 pt-4 border-t border-slate-100"
-                                dangerouslySetInnerHTML={{ __html: article.content }}
-                            />
+                            <Reveal animation="fade-in-up" delay={150}>
+                                <div
+                                    className="prose prose-slate max-w-none text-slate-700 text-sm sm:text-base leading-relaxed space-y-4 pt-4 border-t border-slate-100"
+                                    dangerouslySetInnerHTML={{ __html: article.content }}
+                                />
+                            </Reveal>
 
                             {/* Back Button */}
                             <div className="pt-8 border-t border-slate-100 flex items-center justify-between">
                                 <Link
                                     href="/berita"
-                                    className="inline-flex items-center gap-2 text-xs font-semibold text-blue-600 hover:text-blue-700"
+                                    className="inline-flex items-center gap-2 text-xs font-semibold text-blue-600 hover:text-blue-700 transition-colors"
                                 >
                                     <ArrowLeft className="w-4 h-4" />
                                     <span>Kembali ke Daftar Berita</span>
@@ -98,51 +105,55 @@ export default function Show({ article, relatedNews = [], categories = [] }) {
                         {/* Sidebar (4 columns) */}
                         <aside className="lg:col-span-4 space-y-8">
                             {/* Categories Card */}
-                            <div className="bg-slate-50 rounded-2xl p-6 border border-slate-200/80">
-                                <h3 className="font-bold text-slate-900 text-sm mb-4 flex items-center gap-2">
-                                    <Tag className="w-4 h-4 text-blue-600" />
-                                    <span>Kategori Berita</span>
-                                </h3>
-                                <div className="space-y-2">
-                                    {categories.map((cat) => (
-                                        <Link
-                                            key={cat.id}
-                                            href={`/berita?category=${cat.slug}`}
-                                            className="flex items-center justify-between p-2.5 rounded-lg text-xs font-medium text-slate-700 hover:bg-white hover:text-blue-600 transition-colors"
-                                        >
-                                            <span>{cat.name}</span>
-                                            <span className="bg-slate-200/70 text-slate-600 px-2 py-0.5 rounded-full text-[10px]">
-                                                {cat.news_count ?? 0}
-                                            </span>
-                                        </Link>
-                                    ))}
-                                </div>
-                            </div>
-
-                            {/* Related News Card */}
-                            {relatedNews.length > 0 && (
-                                <div className="bg-slate-50 rounded-2xl p-6 border border-slate-200/80">
-                                    <h3 className="font-bold text-slate-900 text-sm mb-4">
-                                        Berita Terkait
+                            <Reveal animation="fade-in-left" delay={100}>
+                                <div className="bg-slate-50 rounded-2xl p-6 border border-slate-200/80 shadow-2xs hover-lift transition-all">
+                                    <h3 className="font-bold text-slate-900 text-sm mb-4 flex items-center gap-2">
+                                        <Tag className="w-4 h-4 text-blue-600" />
+                                        <span>Kategori Berita</span>
                                     </h3>
-                                    <div className="space-y-4">
-                                        {relatedNews.map((item) => (
-                                            <div key={item.id} className="group">
-                                                <span className="text-[11px] text-slate-400">
-                                                    {item.published_at
-                                                        ? new Date(item.published_at).toLocaleDateString('id-ID', {
-                                                              day: 'numeric',
-                                                              month: 'short',
-                                                          })
-                                                        : ''}
+                                    <div className="space-y-2">
+                                        {categories.map((cat) => (
+                                            <Link
+                                                key={cat.id}
+                                                href={`/berita?category=${cat.slug}`}
+                                                className="flex items-center justify-between p-2.5 rounded-lg text-xs font-medium text-slate-700 hover:bg-white hover:text-blue-600 transition-colors"
+                                            >
+                                                <span>{cat.name}</span>
+                                                <span className="bg-slate-200/70 text-slate-600 px-2 py-0.5 rounded-full text-[10px]">
+                                                    {cat.news_count ?? 0}
                                                 </span>
-                                                <h4 className="text-xs font-bold text-slate-900 group-hover:text-blue-600 leading-snug line-clamp-2 mt-0.5">
-                                                    <Link href={`/berita/${item.slug}`}>{item.title}</Link>
-                                                </h4>
-                                            </div>
+                                            </Link>
                                         ))}
                                     </div>
                                 </div>
+                            </Reveal>
+
+                            {/* Related News Card */}
+                            {relatedNews.length > 0 && (
+                                <Reveal animation="fade-in-left" delay={200}>
+                                    <div className="bg-slate-50 rounded-2xl p-6 border border-slate-200/80 shadow-2xs hover-lift transition-all">
+                                        <h3 className="font-bold text-slate-900 text-sm mb-4">
+                                            Berita Terkait
+                                        </h3>
+                                        <div className="space-y-4">
+                                            {relatedNews.map((item) => (
+                                                <div key={item.id} className="group">
+                                                    <span className="text-[11px] text-slate-400">
+                                                        {item.published_at
+                                                            ? new Date(item.published_at).toLocaleDateString('id-ID', {
+                                                                  day: 'numeric',
+                                                                  month: 'short',
+                                                              })
+                                                            : ''}
+                                                    </span>
+                                                    <h4 className="text-xs font-bold text-slate-900 group-hover:text-blue-600 leading-snug line-clamp-2 mt-0.5 transition-colors">
+                                                        <Link href={`/berita/${item.slug}`}>{item.title}</Link>
+                                                    </h4>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+                                </Reveal>
                             )}
                         </aside>
                     </div>

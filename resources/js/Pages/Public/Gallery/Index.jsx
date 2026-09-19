@@ -3,6 +3,7 @@ import PublicLayout from '@/Layouts/PublicLayout';
 import PageHeader from '@/Components/Public/PageHeader';
 import GalleryCard from '@/Components/Public/GalleryCard';
 import Pagination from '@/Components/UI/Pagination';
+import Reveal from '@/Components/UI/Reveal';
 
 export default function Index({ galleries = { data: [] } }) {
     return (
@@ -19,8 +20,10 @@ export default function Index({ galleries = { data: [] } }) {
             <section className="py-16 bg-white">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                        {galleries.data.map((item) => (
-                            <GalleryCard key={item.id} gallery={item} />
+                        {galleries.data.map((item, idx) => (
+                            <Reveal key={item.id} animation="fade-in-up" delay={Math.min(idx * 75, 450)}>
+                                <GalleryCard gallery={item} />
+                            </Reveal>
                         ))}
                     </div>
 

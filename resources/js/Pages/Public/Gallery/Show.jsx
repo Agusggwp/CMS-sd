@@ -3,6 +3,7 @@ import { Link } from '@inertiajs/react';
 import PublicLayout from '@/Layouts/PublicLayout';
 import Modal from '@/Components/UI/Modal';
 import GalleryCard from '@/Components/Public/GalleryCard';
+import Reveal from '@/Components/UI/Reveal';
 import { ArrowLeft, Image as ImageIcon, ZoomIn } from 'lucide-react';
 
 export default function Show({ gallery, otherGalleries = [] }) {
@@ -32,39 +33,42 @@ export default function Show({ gallery, otherGalleries = [] }) {
             <section className="py-12 bg-white">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     {/* Album Info */}
-                    <div className="mb-10 max-w-3xl">
-                        <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
-                            {gallery.title}
-                        </h1>
-                        {gallery.description && (
-                            <p className="mt-2 text-sm text-slate-600 leading-relaxed">
-                                {gallery.description}
-                            </p>
-                        )}
-                        <span className="inline-flex items-center gap-1 mt-3 px-3 py-1 rounded-full text-xs font-semibold bg-blue-50 text-blue-700 border border-blue-200">
-                            <ImageIcon className="w-3.5 h-3.5" />
-                            {gallery.images?.length || 0} Dokumentasi Foto
-                        </span>
-                    </div>
+                    <Reveal animation="fade-in-up">
+                        <div className="mb-10 max-w-3xl">
+                            <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
+                                {gallery.title}
+                            </h1>
+                            {gallery.description && (
+                                <p className="mt-2 text-sm text-slate-600 leading-relaxed">
+                                    {gallery.description}
+                                </p>
+                            )}
+                            <span className="inline-flex items-center gap-1 mt-3 px-3 py-1 rounded-full text-xs font-semibold bg-blue-50 text-blue-700 border border-blue-200">
+                                <ImageIcon className="w-3.5 h-3.5" />
+                                {gallery.images?.length || 0} Dokumentasi Foto
+                            </span>
+                        </div>
+                    </Reveal>
 
                     {/* Photos Grid */}
                     <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
-                        {gallery.images?.map((img) => (
-                            <div
-                                key={img.id}
-                                onClick={() => setSelectedPhoto(img)}
-                                className="group relative aspect-4/3 rounded-xl overflow-hidden bg-slate-100 cursor-pointer border border-slate-200 shadow-2xs hover:shadow-md transition-all"
-                            >
-                                <img
-                                    src={img.image}
-                                    alt={img.caption || gallery.title}
-                                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                                    loading="lazy"
-                                />
-                                <div className="absolute inset-0 bg-slate-900/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white">
-                                    <ZoomIn className="w-6 h-6" />
+                        {gallery.images?.map((img, idx) => (
+                            <Reveal key={img.id} animation="scale-in" delay={Math.min(idx * 50, 400)}>
+                                <div
+                                    onClick={() => setSelectedPhoto(img)}
+                                    className="hover-lift group relative aspect-4/3 rounded-xl overflow-hidden bg-slate-100 cursor-pointer border border-slate-200 shadow-2xs hover:shadow-md transition-all"
+                                >
+                                    <img
+                                        src={img.image}
+                                        alt={img.caption || gallery.title}
+                                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                                        loading="lazy"
+                                    />
+                                    <div className="absolute inset-0 bg-slate-900/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white">
+                                        <ZoomIn className="w-6 h-6 transform group-hover:scale-110 transition-transform" />
+                                    </div>
                                 </div>
-                            </div>
+                            </Reveal>
                         ))}
                     </div>
 
@@ -78,7 +82,7 @@ export default function Show({ gallery, otherGalleries = [] }) {
                     <div className="mt-12 pt-6 border-t border-slate-100">
                         <Link
                             href="/galeri"
-                            className="inline-flex items-center gap-2 text-xs font-semibold text-blue-600 hover:text-blue-700"
+                            className="inline-flex items-center gap-2 text-xs font-semibold text-blue-600 hover:text-blue-700 transition-colors"
                         >
                             <ArrowLeft className="w-4 h-4" />
                             <span>Kembali ke Semua Album</span>
@@ -87,7 +91,7 @@ export default function Show({ gallery, otherGalleries = [] }) {
 
                     {/* Other Galleries */}
                     {otherGalleries.length > 0 && (
-                        <div className="mt-16 pt-10 border-t border-slate-200">
+                        <Reveal animation="fade-in-up" className="mt-16 pt-10 border-t border-slate-200">
                             <h3 className="text-lg font-bold text-slate-900 mb-6">
                                 Album Galeri Lainnya
                             </h3>
@@ -96,7 +100,7 @@ export default function Show({ gallery, otherGalleries = [] }) {
                                     <GalleryCard key={og.id} gallery={og} />
                                 ))}
                             </div>
-                        </div>
+                        </Reveal>
                     )}
                 </div>
             </section>
