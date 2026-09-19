@@ -68,9 +68,15 @@ export default function Events({ upcomingEvents = { data: [] }, pastEvents = [],
                                         <div
                                             className="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-2xs hover-lift transition-all flex items-start gap-4 h-full"
                                         >
-                                            <div className="shrink-0 text-center w-16 py-3 bg-blue-50 text-blue-700 rounded-xl border border-blue-200">
-                                                <span className="block text-2xl font-extrabold leading-none">{day}</span>
-                                                <span className="block text-xs font-bold uppercase mt-1">{month}</span>
+                                            <div className="shrink-0 w-16 rounded-xl overflow-hidden border border-blue-200/80 shadow-xs bg-white text-center">
+                                                <div className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white text-[10px] font-black uppercase py-0.5 tracking-wider">
+                                                    {month}
+                                                </div>
+                                                <div className="py-2 px-1 bg-gradient-to-b from-blue-50/50 to-white">
+                                                    <span className="block text-2xl font-black text-slate-900 leading-none">
+                                                        {day}
+                                                    </span>
+                                                </div>
                                             </div>
                                             <div className="flex-1">
                                                 <h3 className="font-bold text-slate-900 text-base leading-snug">

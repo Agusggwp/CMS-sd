@@ -52,12 +52,14 @@ export default function Announcements({ announcements = { data: [] }, filters = 
                         {announcements.data.map((item, idx) => (
                             <Reveal key={item.id} direction="up" delay={idx * 75}>
                                 <div
-                                    className="p-6 rounded-2xl bg-white border border-slate-200/80 shadow-2xs hover:border-blue-300 hover-lift transition-all"
+                                    className="p-6 sm:p-7 rounded-2xl bg-white border border-slate-200/90 shadow-2xs hover:border-amber-400/80 hover-lift transition-all relative overflow-hidden pl-7 sm:pl-8 before:absolute before:left-0 before:top-0 before:bottom-0 before:w-1.5 before:bg-gradient-to-b before:from-amber-500 before:to-orange-500"
                                 >
-                                    <div className="flex items-center gap-2 text-xs font-semibold text-slate-400 mb-2">
-                                        <Bell className="w-4 h-4 text-amber-500" />
-                                        <span>
-                                            Diterbitkan:{' '}
+                                    <div className="flex flex-wrap items-center justify-between gap-2 mb-3">
+                                        <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-amber-50 text-amber-700 border border-amber-200/70 text-[11px] font-bold">
+                                            <Bell className="w-3.5 h-3.5 text-amber-500" />
+                                            <span>Pengumuman Resmi</span>
+                                        </div>
+                                        <span className="text-xs text-slate-400 font-medium">
                                             {item.created_at
                                                 ? new Date(item.created_at).toLocaleDateString('id-ID', {
                                                       day: 'numeric',
@@ -67,7 +69,7 @@ export default function Announcements({ announcements = { data: [] }, filters = 
                                                 : ''}
                                         </span>
                                     </div>
-                                    <h3 className="text-base sm:text-lg font-bold text-slate-900 leading-snug mb-3">
+                                    <h3 className="text-base sm:text-lg font-bold text-slate-900 leading-snug mb-2">
                                         {item.title}
                                     </h3>
                                     <p className="text-xs sm:text-sm text-slate-600 leading-relaxed whitespace-pre-line">
