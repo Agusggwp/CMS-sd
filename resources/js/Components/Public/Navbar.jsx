@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Link, usePage } from '@inertiajs/react';
+import { Link, usePage, router } from '@inertiajs/react';
+import axios from 'axios';
 import {
     Menu as MenuIcon,
     X,
@@ -7,6 +8,15 @@ import {
     Mail,
     Search,
     ChevronDown,
+    Loader2,
+    Newspaper,
+    Trophy,
+    Users,
+    Bell,
+    Calendar,
+    FileText,
+    GraduationCap,
+    ArrowRight,
 } from 'lucide-react';
 
 /* --- Accurate Social Media Icons with Brand Colors --- */
@@ -118,7 +128,12 @@ export default function Navbar() {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const [searchOpen, setSearchOpen] = useState(false);
     const [searchQuery, setSearchQuery] = useState('');
+    const [searchResults, setSearchResults] = useState(null);
+    const [isSearching, setIsSearching] = useState(false);
+    const [showLiveResults, setShowLiveResults] = useState(false);
     const searchInputRef = useRef(null);
+    const searchContainerRef = useRef(null);
+    const searchDebounceRef = useRef(null);
 
     // School Settings with defaults matching the reference image
     const rawSchoolName = school_settings.school_name || 'SD Negeri Lebak Bulus 07 Pagi';
@@ -200,10 +215,19 @@ export default function Navbar() {
     };
 
     const handleSearchSubmit = (e) => {
-        e.preventDefault();
-        if (searchQuery.trim()) {
-            window.location.href = `/search?q=${encodeURIComponent(searchQuery.trim())}`;
+        if (e) e.preventDefault();
+        const trimmed = searchQuery.trim();
+        if (trimmed) {
+            setShowLiveResults(false);
+            setSearchOpen(false);
+            router.visit(`/search?q=${encodeURIComponent(trimmed)}`);
         }
+    };
+
+    const handleSelectResult = (targetUrl) => {
+        setShowLiveResults(false);
+        setSearchOpen(false);
+        router.visit(targetUrl);
     };
 
     useEffect(() => {
@@ -211,6 +235,70 @@ export default function Navbar() {
             searchInputRef.current.focus();
         }
     }, [searchOpen]);
+
+    // Live search debounced
+    useEffect(() => {
+        if (searchDebounceRef.current) {
+            clearTimeout(searchDebounceRef.current);
+        }
+
+        const trimmed = searchQuery.trim();
+        if (trimmed.length < 2) {
+            setSearchResults(null);
+            setIsSearching(false);
+            setShowLiveResults(false);
+            return;
+        }
+
+        setIsSearching(true);
+        setShowLiveResults(true);
+
+        searchDebounceRef.current = setTimeout(async () => {
+            try {
+                const response = await axios.get('/search', {
+                    params: { q: trimmed, live: 1 },
+                    headers: { Accept: 'application/json' },
+                });
+                setSearchResults(response.data);
+            } catch (err) {
+                console.error('Search request failed', err);
+            } finally {
+                setIsSearching(false);
+            }
+        }, 250);
+
+        return () => {
+            if (searchDebounceRef.current) {
+                clearTimeout(searchDebounceRef.current);
+            }
+        };
+    }, [searchQuery]);
+
+    // Close live search on click outside or Escape
+    useEffect(() => {
+        const handleClickOutside = (e) => {
+            if (searchContainerRef.current && !searchContainerRef.current.contains(e.target)) {
+                setShowLiveResults(false);
+            }
+        };
+
+        const handleKeyDown = (e) => {
+            if (e.key === 'Escape') {
+                if (showLiveResults) {
+                    setShowLiveResults(false);
+                } else if (searchOpen) {
+                    setSearchOpen(false);
+                }
+            }
+        };
+
+        document.addEventListener('mousedown', handleClickOutside);
+        document.addEventListener('keydown', handleKeyDown);
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+            document.removeEventListener('keydown', handleKeyDown);
+        };
+    }, [showLiveResults, searchOpen]);
 
     return (
         <header className="sticky top-0 z-50 bg-white shadow-xs transition-all">
@@ -448,34 +536,375 @@ export default function Navbar() {
 
             {/* Search Bar Input Dropdown (When triggered by Search button) */}
             {searchOpen && (
-                <div className="bg-slate-50/95 border-b border-slate-200 py-3 animate-fadeIn">
+                <div ref={searchContainerRef} className="bg-slate-50/95 border-b border-slate-200 py-3 animate-fadeIn relative">
                     <div className="max-w-4xl mx-auto px-4 sm:px-6">
-                        <form onSubmit={handleSearchSubmit} className="relative flex items-center">
-                            <input
-                                ref={searchInputRef}
-                                type="text"
-                                value={searchQuery}
-                                onChange={(e) => setSearchQuery(e.target.value)}
-                                placeholder="Ketik kata kunci: berita, prestasi, guru, dokumen, PPDB..."
-                                className="w-full pl-10 pr-24 py-2.5 text-sm bg-white border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-blue-600 shadow-xs"
-                            />
-                            <Search className="w-4 h-4 text-slate-400 absolute left-3.5" />
-                            <div className="absolute right-1.5 flex items-center gap-1">
-                                <button
-                                    type="submit"
-                                    className="px-3.5 py-1.5 text-xs font-bold bg-[#0B1E63] text-white rounded-lg hover:bg-blue-900 transition-colors"
-                                >
-                                    Cari
-                                </button>
-                                <button
-                                    type="button"
-                                    onClick={() => setSearchOpen(false)}
-                                    className="p-1.5 text-slate-400 hover:text-slate-600 rounded-lg"
-                                >
-                                    <X className="w-4 h-4" />
-                                </button>
-                            </div>
-                        </form>
+                        <div className="relative">
+                            <form onSubmit={handleSearchSubmit} className="relative flex items-center">
+                                <input
+                                    ref={searchInputRef}
+                                    type="text"
+                                    value={searchQuery}
+                                    onChange={(e) => setSearchQuery(e.target.value)}
+                                    onFocus={() => {
+                                        if (searchQuery.trim().length >= 2) {
+                                            setShowLiveResults(true);
+                                        }
+                                    }}
+                                    placeholder="Ketik kata kunci: berita, prestasi, guru, dokumen, PPDB..."
+                                    className="w-full pl-10 pr-28 py-2.5 text-sm bg-white border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-blue-600 shadow-xs"
+                                />
+                                <Search className="w-4 h-4 text-slate-400 absolute left-3.5" />
+                                
+                                <div className="absolute right-1.5 flex items-center gap-1">
+                                    {isSearching && (
+                                        <Loader2 className="w-4 h-4 text-blue-600 animate-spin mr-1" />
+                                    )}
+
+                                    {searchQuery && !isSearching && (
+                                        <button
+                                            type="button"
+                                            onClick={() => {
+                                                setSearchQuery('');
+                                                setSearchResults(null);
+                                                setShowLiveResults(false);
+                                                if (searchInputRef.current) searchInputRef.current.focus();
+                                            }}
+                                            className="p-1 text-slate-400 hover:text-slate-600 rounded-md transition-colors cursor-pointer"
+                                            title="Hapus pencarian"
+                                        >
+                                            <X className="w-3.5 h-3.5" />
+                                        </button>
+                                    )}
+
+                                    <button
+                                        type="submit"
+                                        className="px-3.5 py-1.5 text-xs font-bold bg-[#0B1E63] text-white rounded-lg hover:bg-[#071545] transition-colors cursor-pointer flex items-center gap-1 shadow-xs"
+                                    >
+                                        <span>Cari</span>
+                                    </button>
+
+                                    <button
+                                        type="button"
+                                        onClick={() => {
+                                            setSearchOpen(false);
+                                            setShowLiveResults(false);
+                                        }}
+                                        className="p-1.5 text-slate-400 hover:text-slate-600 rounded-lg cursor-pointer"
+                                        title="Tutup"
+                                    >
+                                        <X className="w-4 h-4" />
+                                    </button>
+                                </div>
+                            </form>
+
+                            {/* Floating Live Results Dropdown */}
+                            {showLiveResults && searchQuery.trim().length >= 2 && (
+                                <div className="absolute left-0 right-0 top-full mt-2 bg-white rounded-2xl shadow-2xl border border-slate-200/90 overflow-hidden z-50 animate-fadeIn text-left">
+                                    {/* Header status */}
+                                    <div className="px-4 py-2.5 bg-slate-50 border-b border-slate-100 flex items-center justify-between text-xs text-slate-500">
+                                        <span className="flex items-center gap-1.5">
+                                            {isSearching ? (
+                                                <>
+                                                    <Loader2 className="w-3.5 h-3.5 text-blue-600 animate-spin" />
+                                                    <span>Mencari data untuk <strong>"{searchQuery}"</strong>...</span>
+                                                </>
+                                            ) : (
+                                                <span>
+                                                    Hasil pencarian untuk <strong>"{searchQuery}"</strong> ({searchResults?.total || 0} ditemukan)
+                                                </span>
+                                            )}
+                                        </span>
+                                        <span className="hidden sm:inline text-[11px] text-slate-400">
+                                            Tekan ↵ Enter untuk hasil penuh
+                                        </span>
+                                    </div>
+
+                                    {/* Content Area */}
+                                    <div className="max-h-[60vh] sm:max-h-[420px] overflow-y-auto divide-y divide-slate-100">
+                                        {/* Loading skeleton or indicator if initial */}
+                                        {isSearching && !searchResults && (
+                                            <div className="p-8 text-center text-slate-500 text-sm flex flex-col items-center justify-center gap-2">
+                                                <Loader2 className="w-6 h-6 text-blue-600 animate-spin" />
+                                                <span>Sedang mencari data...</span>
+                                            </div>
+                                        )}
+
+                                        {/* Empty state */}
+                                        {!isSearching && searchResults && searchResults.total === 0 && (
+                                            <div className="p-8 text-center">
+                                                <div className="w-12 h-12 mx-auto rounded-full bg-slate-100 text-slate-400 flex items-center justify-center mb-3">
+                                                    <Search className="w-6 h-6" />
+                                                </div>
+                                                <h4 className="text-sm font-semibold text-slate-800 mb-1">
+                                                    Tidak ada hasil ditemukan
+                                                </h4>
+                                                <p className="text-xs text-slate-500 max-w-sm mx-auto mb-4">
+                                                    Tidak ada konten yang cocok dengan kata kunci "{searchQuery}". Silakan coba kata kunci lain.
+                                                </p>
+                                                <div className="flex flex-wrap justify-center gap-1.5 text-xs">
+                                                    {['Berita', 'Prestasi', 'Guru', 'PPDB', 'Dokumen', 'Agenda'].map((sug) => (
+                                                        <button
+                                                            key={sug}
+                                                            type="button"
+                                                            onClick={() => setSearchQuery(sug)}
+                                                            className="px-2.5 py-1 bg-slate-100 hover:bg-blue-50 hover:text-blue-600 rounded-full text-slate-600 transition-colors cursor-pointer"
+                                                        >
+                                                            {sug}
+                                                        </button>
+                                                    ))}
+                                                </div>
+                                            </div>
+                                        )}
+
+                                        {/* Results Lists */}
+                                        {searchResults && searchResults.total > 0 && (
+                                            <>
+                                                {/* PPDB Highlight Card */}
+                                                {searchResults.ppdb && (
+                                                    <div className="p-3 bg-gradient-to-r from-blue-50 to-indigo-50/60 hover:bg-blue-100/60 transition-colors">
+                                                        <button
+                                                            type="button"
+                                                            onClick={() => handleSelectResult('/ppdb')}
+                                                            className="w-full text-left flex items-center justify-between gap-3 group cursor-pointer"
+                                                        >
+                                                            <div className="flex items-center gap-3">
+                                                                <div className="w-9 h-9 rounded-xl bg-[#0B1E63] text-white flex items-center justify-center shrink-0 shadow-xs">
+                                                                    <GraduationCap className="w-5 h-5" />
+                                                                </div>
+                                                                <div>
+                                                                    <div className="flex items-center gap-2">
+                                                                        <span className="text-xs font-bold text-blue-900 group-hover:text-blue-700">
+                                                                            PPDB Online {searchResults.ppdb.academic_year || ''}
+                                                                        </span>
+                                                                        <span className="px-1.5 py-0.5 rounded text-[10px] font-extrabold bg-blue-600 text-white">
+                                                                            RESMI
+                                                                        </span>
+                                                                    </div>
+                                                                    <p className="text-[11px] text-slate-600 line-clamp-1 mt-0.5">
+                                                                        {searchResults.ppdb.title || 'Informasi pendaftaran dan seleksi siswa baru'}
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                                            <ArrowRight className="w-4 h-4 text-blue-600 group-hover:translate-x-1 transition-transform shrink-0" />
+                                                        </button>
+                                                    </div>
+                                                )}
+
+                                                {/* News */}
+                                                {searchResults.news && searchResults.news.length > 0 && (
+                                                    <div className="p-3">
+                                                        <div className="text-[11px] font-bold text-blue-700 uppercase tracking-wider mb-2 flex items-center gap-1.5">
+                                                            <Newspaper className="w-3.5 h-3.5" />
+                                                            <span>Berita & Informasi ({searchResults.news.length})</span>
+                                                        </div>
+                                                        <div className="space-y-1">
+                                                            {searchResults.news.map((item) => (
+                                                                <button
+                                                                    key={item.id}
+                                                                    type="button"
+                                                                    onClick={() => handleSelectResult(`/berita/${item.slug}`)}
+                                                                    className="w-full text-left p-2 rounded-xl hover:bg-blue-50/70 transition-colors flex items-center justify-between gap-3 group cursor-pointer"
+                                                                >
+                                                                    <div className="min-w-0 flex-1">
+                                                                        <p className="text-xs font-semibold text-slate-800 group-hover:text-blue-700 line-clamp-1">
+                                                                            {item.title}
+                                                                        </p>
+                                                                        <div className="flex items-center gap-2 mt-0.5 text-[11px] text-slate-500">
+                                                                            {item.category?.name && (
+                                                                                <span className="text-blue-600 font-medium">
+                                                                                    {item.category.name}
+                                                                                </span>
+                                                                            )}
+                                                                            <span>•</span>
+                                                                            <span>{item.published_at ? new Date(item.published_at).toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' }) : 'Berita'}</span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <ArrowRight className="w-3.5 h-3.5 text-slate-300 group-hover:text-blue-600 group-hover:translate-x-1 transition-all shrink-0" />
+                                                                </button>
+                                                            ))}
+                                                        </div>
+                                                    </div>
+                                                )}
+
+                                                {/* Prestasi */}
+                                                {searchResults.achievements && searchResults.achievements.length > 0 && (
+                                                    <div className="p-3">
+                                                        <div className="text-[11px] font-bold text-amber-600 uppercase tracking-wider mb-2 flex items-center gap-1.5">
+                                                            <Trophy className="w-3.5 h-3.5" />
+                                                            <span>Prestasi Siswa ({searchResults.achievements.length})</span>
+                                                        </div>
+                                                        <div className="space-y-1">
+                                                            {searchResults.achievements.map((item) => (
+                                                                <button
+                                                                    key={item.id}
+                                                                    type="button"
+                                                                    onClick={() => handleSelectResult('/prestasi')}
+                                                                    className="w-full text-left p-2 rounded-xl hover:bg-amber-50/60 transition-colors flex items-center justify-between gap-3 group cursor-pointer"
+                                                                >
+                                                                    <div className="min-w-0 flex-1">
+                                                                        <p className="text-xs font-semibold text-slate-800 group-hover:text-amber-700 line-clamp-1">
+                                                                            {item.title}
+                                                                        </p>
+                                                                        <p className="text-[11px] text-slate-500 mt-0.5">
+                                                                            {item.participant ? `${item.participant} • ` : ''}{item.ranking || item.rank || 'Penghargaan'} ({item.year || ''})
+                                                                        </p>
+                                                                    </div>
+                                                                    <ArrowRight className="w-3.5 h-3.5 text-slate-300 group-hover:text-amber-600 group-hover:translate-x-1 transition-all shrink-0" />
+                                                                </button>
+                                                            ))}
+                                                        </div>
+                                                    </div>
+                                                )}
+
+                                                {/* Guru */}
+                                                {searchResults.teachers && searchResults.teachers.length > 0 && (
+                                                    <div className="p-3">
+                                                        <div className="text-[11px] font-bold text-purple-700 uppercase tracking-wider mb-2 flex items-center gap-1.5">
+                                                            <Users className="w-3.5 h-3.5" />
+                                                            <span>Guru & Tenaga Pendidik ({searchResults.teachers.length})</span>
+                                                        </div>
+                                                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5">
+                                                            {searchResults.teachers.map((item) => (
+                                                                <button
+                                                                    key={item.id}
+                                                                    type="button"
+                                                                    onClick={() => handleSelectResult('/guru')}
+                                                                    className="text-left p-2 rounded-xl hover:bg-purple-50/60 transition-colors flex items-center gap-2.5 group cursor-pointer"
+                                                                >
+                                                                    {item.photo ? (
+                                                                        <img
+                                                                            src={item.photo}
+                                                                            alt={item.name}
+                                                                            className="w-8 h-8 rounded-full object-cover shrink-0 border border-slate-200"
+                                                                        />
+                                                                    ) : (
+                                                                        <div className="w-8 h-8 rounded-full bg-purple-100 text-purple-700 font-bold text-xs flex items-center justify-center shrink-0">
+                                                                            {item.name?.charAt(0) || 'G'}
+                                                                        </div>
+                                                                    )}
+                                                                    <div className="min-w-0 flex-1">
+                                                                        <p className="text-xs font-semibold text-slate-800 group-hover:text-purple-700 truncate">
+                                                                            {item.name}
+                                                                        </p>
+                                                                        <p className="text-[11px] text-slate-500 truncate">
+                                                                            {item.position || item.subject || 'Tenaga Pendidik'}
+                                                                        </p>
+                                                                    </div>
+                                                                </button>
+                                                            ))}
+                                                        </div>
+                                                    </div>
+                                                )}
+
+                                                {/* Pengumuman */}
+                                                {searchResults.announcements && searchResults.announcements.length > 0 && (
+                                                    <div className="p-3">
+                                                        <div className="text-[11px] font-bold text-orange-600 uppercase tracking-wider mb-2 flex items-center gap-1.5">
+                                                            <Bell className="w-3.5 h-3.5" />
+                                                            <span>Pengumuman ({searchResults.announcements.length})</span>
+                                                        </div>
+                                                        <div className="space-y-1">
+                                                            {searchResults.announcements.map((item) => (
+                                                                <button
+                                                                    key={item.id}
+                                                                    type="button"
+                                                                    onClick={() => handleSelectResult('/pengumuman')}
+                                                                    className="w-full text-left p-2 rounded-xl hover:bg-orange-50/60 transition-colors flex items-center justify-between gap-3 group cursor-pointer"
+                                                                >
+                                                                    <div className="min-w-0 flex-1">
+                                                                        <p className="text-xs font-semibold text-slate-800 group-hover:text-orange-700 line-clamp-1">
+                                                                            {item.title}
+                                                                        </p>
+                                                                        <p className="text-[11px] text-slate-500 mt-0.5 line-clamp-1">
+                                                                            {item.content}
+                                                                        </p>
+                                                                    </div>
+                                                                    <ArrowRight className="w-3.5 h-3.5 text-slate-300 group-hover:text-orange-600 group-hover:translate-x-1 transition-all shrink-0" />
+                                                                </button>
+                                                            ))}
+                                                        </div>
+                                                    </div>
+                                                )}
+
+                                                {/* Agenda */}
+                                                {searchResults.events && searchResults.events.length > 0 && (
+                                                    <div className="p-3">
+                                                        <div className="text-[11px] font-bold text-emerald-600 uppercase tracking-wider mb-2 flex items-center gap-1.5">
+                                                            <Calendar className="w-3.5 h-3.5" />
+                                                            <span>Agenda & Acara ({searchResults.events.length})</span>
+                                                        </div>
+                                                        <div className="space-y-1">
+                                                            {searchResults.events.map((item) => (
+                                                                <button
+                                                                    key={item.id}
+                                                                    type="button"
+                                                                    onClick={() => handleSelectResult('/agenda')}
+                                                                    className="w-full text-left p-2 rounded-xl hover:bg-emerald-50/60 transition-colors flex items-center justify-between gap-3 group cursor-pointer"
+                                                                >
+                                                                    <div className="min-w-0 flex-1">
+                                                                        <p className="text-xs font-semibold text-slate-800 group-hover:text-emerald-700 line-clamp-1">
+                                                                            {item.title}
+                                                                        </p>
+                                                                        <p className="text-[11px] text-slate-500 mt-0.5">
+                                                                            {item.location || 'Lokasi Sekolah'}
+                                                                        </p>
+                                                                    </div>
+                                                                    <ArrowRight className="w-3.5 h-3.5 text-slate-300 group-hover:text-emerald-600 group-hover:translate-x-1 transition-all shrink-0" />
+                                                                </button>
+                                                            ))}
+                                                        </div>
+                                                    </div>
+                                                )}
+
+                                                {/* Documents */}
+                                                {searchResults.documents && searchResults.documents.length > 0 && (
+                                                    <div className="p-3">
+                                                        <div className="text-[11px] font-bold text-cyan-700 uppercase tracking-wider mb-2 flex items-center gap-1.5">
+                                                            <FileText className="w-3.5 h-3.5" />
+                                                            <span>Dokumen & Unduhan ({searchResults.documents.length})</span>
+                                                        </div>
+                                                        <div className="space-y-1">
+                                                            {searchResults.documents.map((item) => (
+                                                                <button
+                                                                    key={item.id}
+                                                                    type="button"
+                                                                    onClick={() => handleSelectResult('/dokumen')}
+                                                                    className="w-full text-left p-2 rounded-xl hover:bg-cyan-50/60 transition-colors flex items-center justify-between gap-3 group cursor-pointer"
+                                                                >
+                                                                    <div className="min-w-0 flex-1">
+                                                                        <p className="text-xs font-semibold text-slate-800 group-hover:text-cyan-800 line-clamp-1">
+                                                                            {item.title}
+                                                                        </p>
+                                                                        <p className="text-[11px] text-slate-500 mt-0.5">
+                                                                            {item.type ? item.type.toUpperCase() : 'Dokumen'}{item.size ? ` • ${item.size}` : ''}
+                                                                        </p>
+                                                                    </div>
+                                                                    <ArrowRight className="w-3.5 h-3.5 text-slate-300 group-hover:text-cyan-700 group-hover:translate-x-1 transition-all shrink-0" />
+                                                                </button>
+                                                            ))}
+                                                        </div>
+                                                    </div>
+                                                )}
+                                            </>
+                                        )}
+                                    </div>
+
+                                    {/* Footer Button: View full search */}
+                                    {searchResults && searchResults.total > 0 && (
+                                        <div className="p-2.5 bg-slate-50/90 border-t border-slate-100 flex items-center justify-between">
+                                            <button
+                                                type="button"
+                                                onClick={handleSearchSubmit}
+                                                className="w-full py-2 px-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold transition-all shadow-2xs hover:shadow-xs flex items-center justify-center gap-1.5 cursor-pointer"
+                                            >
+                                                <span>Lihat semua {searchResults.total} hasil pencarian</span>
+                                                <ArrowRight className="w-3.5 h-3.5" />
+                                            </button>
+                                        </div>
+                                    )}
+                                </div>
+                            )}
+                        </div>
                     </div>
                 </div>
             )}
