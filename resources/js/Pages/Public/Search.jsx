@@ -255,7 +255,7 @@ export default function Search({
                                 {events.map((ev) => (
                                     <div key={ev.id} className="hover-lift p-4 rounded-xl bg-white border border-slate-200 shadow-2xs transition-all">
                                         <h3 className="text-sm font-bold text-slate-900">{ev.title}</h3>
-                                        <p className="text-xs text-slate-500 mt-1 line-clamp-1">{ev.location || 'Lingkungan SDN Lebak Bulus 07'}</p>
+                                        <p className="text-xs text-slate-500 mt-1 line-clamp-1">{ev.location || 'Lingkungan SDN Percontohan'}</p>
                                     </div>
                                 ))}
                             </div>

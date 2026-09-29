@@ -21,6 +21,13 @@ class TeacherController extends Controller
                       ->orWhere('subject', 'like', "%{$search}%");
                 });
             })
+            ->orderByRaw("
+                CASE
+                    WHEN LOWER(position) LIKE '%kepala sekolah%' THEN 0
+                    WHEN LOWER(position) LIKE '%wakil kepala%'   THEN 1
+                    ELSE 2
+                END ASC
+            ")
             ->orderBy('order', 'asc')
             ->paginate(12)
             ->withQueryString();

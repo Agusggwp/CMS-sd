@@ -32,7 +32,9 @@ use App\Http\Controllers\PPDBController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\SitemapController;
 use App\Http\Controllers\TeacherController;
+use App\Http\Controllers\TeacherSubmissionController;
 use App\Http\Controllers\VisionMissionController;
+use App\Http\Controllers\Admin\TeacherSubmissionAdminController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -44,6 +46,8 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/tentang', [AboutController::class, 'index'])->name('about');
 Route::get('/visi-misi', [VisionMissionController::class, 'index'])->name('vision-mission');
 Route::get('/guru', [TeacherController::class, 'index'])->name('teachers.index');
+Route::get('/guru/daftar', [TeacherSubmissionController::class, 'create'])->name('teacher.submission.create');
+Route::post('/guru/daftar', [TeacherSubmissionController::class, 'store'])->name('teacher.submission.store');
 Route::get('/berita', [NewsController::class, 'index'])->name('news.index');
 Route::get('/berita/{slug}', [NewsController::class, 'show'])->name('news.show');
 Route::get('/pengumuman', [AnnouncementController::class, 'index'])->name('announcements.index');
@@ -92,6 +96,16 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
 
     // Teachers & Staff
     Route::resource('teachers', AdminTeacherController::class)->except(['show']);
+
+    // Teacher Submissions (guru isi data sendiri)
+    Route::prefix('teacher-submissions')->name('teacher-submissions.')->group(function () {
+        Route::get('/', [TeacherSubmissionAdminController::class, 'index'])->name('index');
+        Route::post('/{teacher}/approve', [TeacherSubmissionAdminController::class, 'approve'])->name('approve');
+        Route::post('/{teacher}/reject', [TeacherSubmissionAdminController::class, 'reject'])->name('reject');
+        Route::get('/settings', [TeacherSubmissionAdminController::class, 'settings'])->name('settings');
+        Route::post('/settings', [TeacherSubmissionAdminController::class, 'updateSettings'])->name('settings.update');
+        Route::post('/toggle-form', [TeacherSubmissionAdminController::class, 'toggleForm'])->name('toggle-form');
+    });
 
     // Galleries & Images
     Route::resource('galleries', AdminGalleryController::class)->except(['show']);

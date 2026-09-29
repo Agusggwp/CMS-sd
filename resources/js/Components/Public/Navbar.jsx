@@ -101,7 +101,7 @@ function SchoolEmblem({ className = "w-14 h-14" }) {
             <path id="circleTextPathBottom" d="M 82,50 A 32,32 0 0,1 18,50" fill="none" />
             <text fill="#FFC72C" fontSize="6" fontWeight="bold" letterSpacing="1">
                 <textPath href="#circleTextPathBottom" startOffset="50%" textAnchor="middle">
-                    LEBAK BULUS 07
+                    PERCONTOHAN
                 </textPath>
             </text>
 
@@ -135,10 +135,10 @@ export default function Navbar() {
     const searchContainerRef = useRef(null);
     const searchDebounceRef = useRef(null);
 
-    // School Settings with defaults matching the reference image
-    const rawSchoolName = school_settings.school_name || 'SD Negeri Lebak Bulus 07 Pagi';
-    const phone = school_settings.school_phone || '021-7693104';
-    const email = school_settings.school_email || 'sdn.lebakbulus.07.pg@gmail.com';
+    // School Settings with defaults
+    const rawSchoolName = school_settings.school_name || 'SD Negeri Percontohan';
+    const phone = school_settings.school_phone || '(021) 567-8901';
+    const email = school_settings.school_email || 'info@sdpercontohan.sch.id';
     const logoUrl = school_settings.school_logo || null;
 
     // Social Links
@@ -151,13 +151,13 @@ export default function Navbar() {
 
     // Parse brand name into Line 1 (blue) and Line 2 (orange)
     let brandTop = 'SEKOLAH DASAR NEGERI';
-    let brandBottom = 'LEBAK BULUS 07 PAGI';
+    let brandBottom = 'PERCONTOHAN';
 
     if (rawSchoolName) {
         const upper = rawSchoolName.toUpperCase();
-        if (upper.includes('LEBAK BULUS')) {
+        if (upper.includes('PERCONTOHAN')) {
             brandTop = 'SEKOLAH DASAR NEGERI';
-            brandBottom = 'LEBAK BULUS 07 PAGI';
+            brandBottom = 'PERCONTOHAN';
         } else if (upper.startsWith('SD NEGERI ') || upper.startsWith('SEKOLAH DASAR NEGERI ')) {
             brandTop = 'SEKOLAH DASAR NEGERI';
             brandBottom = upper.replace(/^(SD NEGERI |SEKOLAH DASAR NEGERI )/, '');

@@ -33,6 +33,13 @@ class HomeController extends Controller
                 ->take(3)
                 ->get(),
             'teachers' => Teacher::where('is_active', true)
+                ->orderByRaw("
+                    CASE
+                        WHEN LOWER(position) LIKE '%kepala sekolah%' THEN 0
+                        WHEN LOWER(position) LIKE '%wakil kepala%'   THEN 1
+                        ELSE 2
+                    END ASC
+                ")
                 ->orderBy('order', 'asc')
                 ->take(4)
                 ->get(),

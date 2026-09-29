@@ -41,7 +41,7 @@ export default function Sidebar({
     const sidebarOpen = propSidebarOpen !== undefined ? propSidebarOpen : !!isOpen;
     const setSidebarOpen = propSetSidebarOpen || (onClose ? (val) => { if (!val) onClose(); } : () => {});
     const user = propUser || auth.user || { name: 'Admin CMS', email: 'admin@sekolah.sch.id', role: 'admin' };
-    const schoolName = school_settings.school_name || 'SD ARTDEVATA';
+    const schoolName = school_settings.school_name || 'SD Negeri Percontohan';
     const logoUrl = school_settings.school_logo || null;
 
     const [logoutOpen, setLogoutOpen] = useState(false);
@@ -82,6 +82,7 @@ export default function Sidebar({
             group: 'PROFIL & AKADEMIK',
             items: [
                 { name: 'Guru & Staf', href: '/admin/teachers', icon: Users },
+                { name: 'Pengajuan Guru', href: '/admin/teacher-submissions', icon: UserCheck },
                 { name: 'Galeri Foto', href: '/admin/galleries', icon: Image },
                 { name: 'Prestasi Siswa', href: '/admin/achievements', icon: Trophy },
                 { name: 'Fasilitas Belajar', href: '/admin/facilities', icon: Building2 },

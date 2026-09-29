@@ -15,13 +15,19 @@ class Teacher extends Model
         'position',
         'subject',
         'bio',
+        'email',
+        'phone',
         'photo',
         'order',
         'is_active',
+        'submission_status',
+        'rejection_reason',
+        'is_self_submitted',
     ];
 
     protected $casts = [
-        'is_active' => 'boolean',
-        'order' => 'integer',
+        'is_active'        => 'boolean',
+        'is_self_submitted' => 'boolean',
+        'order'            => 'integer',
     ];
 }

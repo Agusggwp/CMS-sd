@@ -53,17 +53,17 @@ export default function Footer() {
                     {/* Column 1: School Identity */}
                     <div className="space-y-4">
                         <div className="flex items-center gap-3">
-                            <div className="w-11 h-11 rounded-xl bg-blue-600 text-white flex items-center justify-center shadow-lg shadow-blue-500/20">
-                                {school_settings.school_logo ? (
-                                    <img
-                                        src={school_settings.school_logo}
-                                        alt={schoolName}
-                                        className="w-9 h-9 object-contain"
-                                    />
-                                ) : (
-                                    <GraduationCap className="w-6 h-6 text-white" />
-                                )}
-                            </div>
+                            {school_settings.school_logo ? (
+                                <img
+                                    src={school_settings.school_logo}
+                                    alt={schoolName}
+                                    className="w-11 h-11 object-contain shrink-0"
+                                />
+                            ) : (
+                                <div className="w-11 h-11 rounded-xl bg-slate-800 text-white flex items-center justify-center shrink-0 border border-slate-700">
+                                    <GraduationCap className="w-6 h-6 text-slate-300" />
+                                </div>
+                            )}
                             <div>
                                 <h4 className="text-base font-bold text-white leading-tight">
                                     {schoolName}
@@ -157,7 +157,7 @@ export default function Footer() {
                         <p className="text-xs text-slate-400 mb-4">
                             Ikuti kanal komunikasi resmi kami untuk update kegiatan sekolah sehari-hari.
                         </p>
-                        <div className="flex items-center space-x-3 mb-6">
+                        <div className="flex items-center space-x-3">
                             {school_settings.social_facebook && (
                                 <a
                                     href={school_settings.social_facebook}
@@ -188,16 +188,6 @@ export default function Footer() {
                                     <YoutubeIcon className="w-4 h-4" />
                                 </a>
                             )}
-                        </div>
-
-                        <div className="pt-2">
-                            <Link
-                                href="/admin/login"
-                                className="inline-flex items-center gap-2 text-xs font-medium px-3.5 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white transition-colors"
-                            >
-                                <span>Login Operator CMS</span>
-                                <ArrowUpRight className="w-3.5 h-3.5" />
-                            </Link>
                         </div>
                     </div>
                 </div>

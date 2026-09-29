@@ -134,12 +134,14 @@ export default function SchoolSettings({ settings = {} }) {
                         </div>
 
                         <Textarea
-                            label="Deskripsi Profil Singkat"
+                            label="Deskripsi Profil Singkat / Teks Footer"
                             name="school_description"
                             rows={3}
                             value={data.school_description}
                             onChange={(e) => setData('school_description', e.target.value)}
                             error={errors.school_description}
+                            helperText="Teks deskripsi ini ditampilkan di profil sekolah dan pada bagian Footer (di bawah logo sekolah)."
+                            placeholder="Contoh: SD Negeri ... berkomitmen menyelenggarakan pendidikan dasar..."
                         />
 
                         <div>

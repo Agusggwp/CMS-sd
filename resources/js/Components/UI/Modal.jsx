@@ -7,6 +7,7 @@ export default function Modal({
     title,
     children,
     maxWidth = 'max-w-lg',
+    hideHeader = false,
 }) {
     useEffect(() => {
         const handleKeyDown = (e) => {
@@ -41,16 +42,18 @@ export default function Modal({
                 <div
                     className={`relative bg-white rounded-2xl p-6 text-left shadow-2xl transform transition-all w-full ${maxWidth} my-8 z-10 border border-slate-100`}
                 >
-                    <div className="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
-                        <h3 className="text-lg font-bold text-slate-900">{title}</h3>
-                        <button
-                            type="button"
-                            onClick={onClose}
-                            className="text-slate-400 hover:text-slate-600 p-1 rounded-lg hover:bg-slate-100 transition-colors"
-                        >
-                            <X className="w-5 h-5" />
-                        </button>
-                    </div>
+                    {!hideHeader && (
+                        <div className="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+                            <h3 className="text-lg font-bold text-slate-900">{title}</h3>
+                            <button
+                                type="button"
+                                onClick={onClose}
+                                className="text-slate-400 hover:text-slate-600 p-1 rounded-lg hover:bg-slate-100 transition-colors"
+                            >
+                                <X className="w-5 h-5" />
+                            </button>
+                        </div>
+                    )}
                     <div>{children}</div>
                 </div>
             </div>
