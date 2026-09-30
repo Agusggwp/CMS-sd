@@ -46,7 +46,7 @@ class HandleInertiaRequests extends Middleware
                 'success' => fn () => $request->session()->get('success'),
                 'error' => fn () => $request->session()->get('error'),
             ],
-            'school_settings' => fn () => SchoolSetting::getAll(),
+            'school_settings' => fn () => SchoolSetting::getMergedWithRealData(),
             'navigation_menus' => fn () => Menu::where('is_active', true)
                 ->whereNull('parent_id')
                 ->where('location', 'header')

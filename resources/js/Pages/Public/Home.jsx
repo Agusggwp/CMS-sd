@@ -138,55 +138,65 @@ export default function Home({
                         </div>
                     </Reveal>
 
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-                        <Reveal direction="up" delay={50}>
-                            <div className="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-2xs text-center hover-lift hover:border-blue-300 transition-all">
-                                <div className="w-13 h-13 rounded-2xl bg-gradient-to-br from-blue-600 to-indigo-600 text-white flex items-center justify-center mx-auto mb-3.5 shadow-md shadow-blue-500/25">
-                                    <GraduationCap className="w-6 h-6" />
-                                </div>
-                                <div className="text-3xl font-black text-slate-900 mb-1 tracking-tight">
-                                    {settings.stat_students || '500+'}
-                                </div>
-                                <div className="text-xs font-semibold text-slate-500">Siswa Aktif</div>
-                            </div>
-                        </Reveal>
+                    {(() => {
+                        const hasVal = (v) => v !== null && v !== undefined && String(v).trim() !== '';
+                        const statStudents = hasVal(settings.stat_students) ? settings.stat_students : '500+';
+                        const statTeachers = hasVal(settings.stat_teachers) ? settings.stat_teachers : '35';
+                        const statYears = hasVal(settings.stat_years) ? settings.stat_years : '20+';
+                        const statAchievements = hasVal(settings.stat_achievements) ? settings.stat_achievements : '48';
 
-                        <Reveal direction="up" delay={100}>
-                            <div className="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-2xs text-center hover-lift hover:border-emerald-300 transition-all">
-                                <div className="w-13 h-13 rounded-2xl bg-gradient-to-br from-emerald-500 to-teal-600 text-white flex items-center justify-center mx-auto mb-3.5 shadow-md shadow-emerald-500/25">
-                                    <BookOpen className="w-6 h-6" />
-                                </div>
-                                <div className="text-3xl font-black text-slate-900 mb-1 tracking-tight">
-                                    {settings.stat_teachers || '35'}
-                                </div>
-                                <div className="text-xs font-semibold text-slate-500">Guru Berdedikasi</div>
-                            </div>
-                        </Reveal>
+                        return (
+                            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+                                <Reveal direction="up" delay={50}>
+                                    <div className="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-2xs text-center hover-lift hover:border-blue-300 transition-all">
+                                        <div className="w-13 h-13 rounded-2xl bg-gradient-to-br from-blue-600 to-indigo-600 text-white flex items-center justify-center mx-auto mb-3.5 shadow-md shadow-blue-500/25">
+                                            <GraduationCap className="w-6 h-6" />
+                                        </div>
+                                        <div className="text-3xl font-black text-slate-900 mb-1 tracking-tight">
+                                            {statStudents}
+                                        </div>
+                                        <div className="text-xs font-semibold text-slate-500">Siswa Aktif</div>
+                                    </div>
+                                </Reveal>
 
-                        <Reveal direction="up" delay={150}>
-                            <div className="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-2xs text-center hover-lift hover:border-amber-300 transition-all">
-                                <div className="w-13 h-13 rounded-2xl bg-gradient-to-br from-amber-500 to-orange-500 text-white flex items-center justify-center mx-auto mb-3.5 shadow-md shadow-amber-500/25">
-                                    <Calendar className="w-6 h-6" />
-                                </div>
-                                <div className="text-3xl font-black text-slate-900 mb-1 tracking-tight">
-                                    {settings.stat_years || '20+'}
-                                </div>
-                                <div className="text-xs font-semibold text-slate-500">Tahun Berdiri</div>
-                            </div>
-                        </Reveal>
+                                <Reveal direction="up" delay={100}>
+                                    <div className="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-2xs text-center hover-lift hover:border-emerald-300 transition-all">
+                                        <div className="w-13 h-13 rounded-2xl bg-gradient-to-br from-emerald-500 to-teal-600 text-white flex items-center justify-center mx-auto mb-3.5 shadow-md shadow-emerald-500/25">
+                                            <BookOpen className="w-6 h-6" />
+                                        </div>
+                                        <div className="text-3xl font-black text-slate-900 mb-1 tracking-tight">
+                                            {statTeachers}
+                                        </div>
+                                        <div className="text-xs font-semibold text-slate-500">Guru Berdedikasi</div>
+                                    </div>
+                                </Reveal>
 
-                        <Reveal direction="up" delay={200}>
-                            <div className="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-2xs text-center hover-lift hover:border-purple-300 transition-all">
-                                <div className="w-13 h-13 rounded-2xl bg-gradient-to-br from-purple-600 to-violet-600 text-white flex items-center justify-center mx-auto mb-3.5 shadow-md shadow-purple-500/25">
-                                    <Trophy className="w-6 h-6" />
-                                </div>
-                                <div className="text-3xl font-black text-slate-900 mb-1 tracking-tight">
-                                    {settings.stat_achievements || '48'}
-                                </div>
-                                <div className="text-xs font-semibold text-slate-500">Piala Prestasi</div>
+                                <Reveal direction="up" delay={150}>
+                                    <div className="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-2xs text-center hover-lift hover:border-amber-300 transition-all">
+                                        <div className="w-13 h-13 rounded-2xl bg-gradient-to-br from-amber-500 to-orange-500 text-white flex items-center justify-center mx-auto mb-3.5 shadow-md shadow-amber-500/25">
+                                            <Calendar className="w-6 h-6" />
+                                        </div>
+                                        <div className="text-3xl font-black text-slate-900 mb-1 tracking-tight">
+                                            {statYears}
+                                        </div>
+                                        <div className="text-xs font-semibold text-slate-500">Tahun Berdiri</div>
+                                    </div>
+                                </Reveal>
+
+                                <Reveal direction="up" delay={200}>
+                                    <div className="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-2xs text-center hover-lift hover:border-purple-300 transition-all">
+                                        <div className="w-13 h-13 rounded-2xl bg-gradient-to-br from-purple-600 to-violet-600 text-white flex items-center justify-center mx-auto mb-3.5 shadow-md shadow-purple-500/25">
+                                            <Trophy className="w-6 h-6" />
+                                        </div>
+                                        <div className="text-3xl font-black text-slate-900 mb-1 tracking-tight">
+                                            {statAchievements}
+                                        </div>
+                                        <div className="text-xs font-semibold text-slate-500">Piala Prestasi</div>
+                                    </div>
+                                </Reveal>
                             </div>
-                        </Reveal>
-                    </div>
+                        );
+                    })()}
                 </div>
             </section>
 

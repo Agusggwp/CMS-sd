@@ -18,7 +18,7 @@ import {
     Save,
 } from 'lucide-react';
 
-export default function SchoolSettings({ settings = {} }) {
+export default function SchoolSettings({ settings = {}, realStats = {} }) {
     const [activeTab, setActiveTab] = useState('identity');
 
     const { data, setData, post, processing, errors, recentlySuccessful } = useForm({
@@ -340,38 +340,63 @@ export default function SchoolSettings({ settings = {} }) {
                 {/* 6. STATISTIK */}
                 {activeTab === 'stats' && (
                     <div className="space-y-4">
-                        <h3 className="text-sm font-bold text-slate-900 border-b border-slate-100 pb-3">
-                            Data Angka Statistik Beranda
-                        </h3>
-                        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-                            <Input
-                                label="Jumlah Siswa"
-                                name="stat_students"
-                                value={data.stat_students}
-                                onChange={(e) => setData('stat_students', e.target.value)}
-                                placeholder="500+"
-                            />
-                            <Input
-                                label="Jumlah Guru"
-                                name="stat_teachers"
-                                value={data.stat_teachers}
-                                onChange={(e) => setData('stat_teachers', e.target.value)}
-                                placeholder="35"
-                            />
-                            <Input
-                                label="Tahun Berdiri"
-                                name="stat_years"
-                                value={data.stat_years}
-                                onChange={(e) => setData('stat_years', e.target.value)}
-                                placeholder="20+"
-                            />
-                            <Input
-                                label="Jumlah Prestasi"
-                                name="stat_achievements"
-                                value={data.stat_achievements}
-                                onChange={(e) => setData('stat_achievements', e.target.value)}
-                                placeholder="48"
-                            />
+                        <div className="border-b border-slate-100 pb-3">
+                            <h3 className="text-sm font-bold text-slate-900">
+                                Data Angka Statistik Beranda
+                            </h3>
+                            <p className="text-xs text-slate-500 mt-1">
+                                Jika field dikosongkan, sistem secara otomatis akan mengambil jumlah data riil dari database (seperti jumlah guru aktif, jumlah prestasi, dan pendaftar PPDB).
+                            </p>
+                        </div>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                            <div>
+                                <Input
+                                    label="Jumlah Siswa"
+                                    name="stat_students"
+                                    value={data.stat_students}
+                                    onChange={(e) => setData('stat_students', e.target.value)}
+                                    placeholder={realStats?.students_count ? `${realStats.students_count}+` : "500+"}
+                                />
+                                <span className="text-[11px] text-slate-500 mt-1 block">
+                                    Riil sistem: <strong>{realStats?.students_count || 0} Siswa diterima</strong>
+                                </span>
+                            </div>
+                            <div>
+                                <Input
+                                    label="Jumlah Guru"
+                                    name="stat_teachers"
+                                    value={data.stat_teachers}
+                                    onChange={(e) => setData('stat_teachers', e.target.value)}
+                                    placeholder={realStats?.teachers_count ? `${realStats.teachers_count}` : "35"}
+                                />
+                                <span className="text-[11px] text-slate-500 mt-1 block">
+                                    Riil sistem: <strong>{realStats?.teachers_count || 0} Guru aktif</strong>
+                                </span>
+                            </div>
+                            <div>
+                                <Input
+                                    label="Tahun Berdiri / Dedikasi"
+                                    name="stat_years"
+                                    value={data.stat_years}
+                                    onChange={(e) => setData('stat_years', e.target.value)}
+                                    placeholder="20+"
+                                />
+                                <span className="text-[11px] text-slate-500 mt-1 block">
+                                    Dedikasi sekolah (misal: 20+ atau 25 Tahun)
+                                </span>
+                            </div>
+                            <div>
+                                <Input
+                                    label="Jumlah Prestasi"
+                                    name="stat_achievements"
+                                    value={data.stat_achievements}
+                                    onChange={(e) => setData('stat_achievements', e.target.value)}
+                                    placeholder={realStats?.achievements_count ? `${realStats.achievements_count}` : "48"}
+                                />
+                                <span className="text-[11px] text-slate-500 mt-1 block">
+                                    Riil sistem: <strong>{realStats?.achievements_count || 0} Prestasi tercatat</strong>
+                                </span>
+                            </div>
                         </div>
                     </div>
                 )}

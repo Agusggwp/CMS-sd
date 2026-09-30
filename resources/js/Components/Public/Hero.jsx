@@ -62,20 +62,29 @@ export default function Hero({ settings = {} }) {
                         </div>
 
                         {/* Key Trust Signals */}
-                        <div className="pt-8 border-t border-slate-200/80 grid grid-cols-3 gap-4 text-center lg:text-left animate-fade-in-up delay-300">
-                            <div className="p-3 sm:p-4 rounded-2xl bg-white/70 border border-slate-200/60 shadow-2xs hover:border-blue-200 transition-colors">
-                                <div className="text-2xl sm:text-3xl font-extrabold text-blue-700">{settings.stat_students || '500+'}</div>
-                                <div className="text-xs text-slate-500 font-semibold mt-0.5">Siswa Aktif</div>
-                            </div>
-                            <div className="p-3 sm:p-4 rounded-2xl bg-white/70 border border-slate-200/60 shadow-2xs hover:border-blue-200 transition-colors">
-                                <div className="text-2xl sm:text-3xl font-extrabold text-indigo-700">{settings.stat_teachers || '35'}</div>
-                                <div className="text-xs text-slate-500 font-semibold mt-0.5">Guru & Pendidik</div>
-                            </div>
-                            <div className="p-3 sm:p-4 rounded-2xl bg-white/70 border border-slate-200/60 shadow-2xs hover:border-blue-200 transition-colors">
-                                <div className="text-2xl sm:text-3xl font-extrabold text-emerald-700">{settings.stat_years || '20+'}</div>
-                                <div className="text-xs text-slate-500 font-semibold mt-0.5">Tahun Dedikasi</div>
-                            </div>
-                        </div>
+                        {(() => {
+                            const hasVal = (v) => v !== null && v !== undefined && String(v).trim() !== '';
+                            const statStudents = hasVal(settings.stat_students) ? settings.stat_students : '500+';
+                            const statTeachers = hasVal(settings.stat_teachers) ? settings.stat_teachers : '35';
+                            const statYears = hasVal(settings.stat_years) ? settings.stat_years : '20+';
+
+                            return (
+                                <div className="pt-8 border-t border-slate-200/80 grid grid-cols-3 gap-4 text-center lg:text-left animate-fade-in-up delay-300">
+                                    <div className="p-3 sm:p-4 rounded-2xl bg-white/70 border border-slate-200/60 shadow-2xs hover:border-blue-200 transition-colors">
+                                        <div className="text-2xl sm:text-3xl font-extrabold text-blue-700">{statStudents}</div>
+                                        <div className="text-xs text-slate-500 font-semibold mt-0.5">Siswa Aktif</div>
+                                    </div>
+                                    <div className="p-3 sm:p-4 rounded-2xl bg-white/70 border border-slate-200/60 shadow-2xs hover:border-blue-200 transition-colors">
+                                        <div className="text-2xl sm:text-3xl font-extrabold text-indigo-700">{statTeachers}</div>
+                                        <div className="text-xs text-slate-500 font-semibold mt-0.5">Guru & Pendidik</div>
+                                    </div>
+                                    <div className="p-3 sm:p-4 rounded-2xl bg-white/70 border border-slate-200/60 shadow-2xs hover:border-blue-200 transition-colors">
+                                        <div className="text-2xl sm:text-3xl font-extrabold text-emerald-700">{statYears}</div>
+                                        <div className="text-xs text-slate-500 font-semibold mt-0.5">Tahun Dedikasi</div>
+                                    </div>
+                                </div>
+                            );
+                        })()}
                     </div>
 
                     {/* Right Column: Hero Visual Card */}

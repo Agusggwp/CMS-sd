@@ -16,6 +16,11 @@ class SchoolSettingController extends Controller
     {
         return Inertia::render('Admin/School/Settings', [
             'settings' => SchoolSetting::getAll(),
+            'realStats' => [
+                'teachers_count' => \App\Models\Teacher::where('is_active', true)->count(),
+                'achievements_count' => \App\Models\Achievement::count(),
+                'students_count' => \App\Models\PPDBRegistration::whereIn('status', ['accepted', 'approved'])->count(),
+            ],
         ]);
     }
 

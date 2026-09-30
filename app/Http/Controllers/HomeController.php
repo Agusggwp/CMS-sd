@@ -19,7 +19,7 @@ class HomeController extends Controller
     public function index(): Response
     {
         return Inertia::render('Public/Home', [
-            'settings' => SchoolSetting::getAll(),
+            'settings' => SchoolSetting::getMergedWithRealData(),
             'latestNews' => News::published()
                 ->with('category:id,name,slug')
                 ->latest('published_at')

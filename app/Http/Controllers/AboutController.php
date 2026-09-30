@@ -12,7 +12,7 @@ class AboutController extends Controller
     public function index(): Response
     {
         return Inertia::render('Public/About', [
-            'settings' => SchoolSetting::getAll(),
+            'settings' => SchoolSetting::getMergedWithRealData(),
             'principal' => Teacher::where('position', 'like', '%Kepala Sekolah%')->first(),
         ]);
     }

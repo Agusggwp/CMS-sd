@@ -203,7 +203,6 @@ export default function Navbar() {
                 { label: 'Pengumuman Resmi', href: '/pengumuman' },
                 { label: 'Unduh Dokumen & Brosur', href: '/dokumen' },
                 { label: 'Kontak & Lokasi', href: '/kontak' },
-                { label: 'Portal Operator / Admin', href: '/admin/login' },
             ],
         },
     ];
@@ -1079,13 +1078,6 @@ export default function Navbar() {
                             className="w-full flex items-center justify-center bg-[#0B1E63] text-white text-sm font-bold py-2.5 rounded-full shadow-md hover:bg-blue-900 transition-colors tracking-wider uppercase"
                         >
                             PPDB Online
-                        </Link>
-                        <Link
-                            href="/admin/login"
-                            onClick={() => setMobileMenuOpen(false)}
-                            className="w-full text-center text-xs text-slate-500 py-1.5"
-                        >
-                            Masuk Portal Admin
                         </Link>
                     </div>
                 </div>
