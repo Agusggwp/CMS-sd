@@ -27,6 +27,49 @@ import { ConfirmDialog } from '@/Components/UI/ConfirmDialog';
 import Button from '@/Components/UI/Button';
 import { Avatar, AvatarImage, AvatarFallback } from '@/Components/UI/Avatar';
 
+const NAVIGATION = [
+    {
+        group: 'UTAMA',
+        items: [
+            { name: 'Dashboard', href: '/admin', icon: LayoutDashboard },
+        ],
+    },
+    {
+        group: 'KONTEN & PUBLIKASI',
+        items: [
+            { name: 'Berita Sekolah', href: '/admin/news', icon: Newspaper },
+            { name: 'Kategori Berita', href: '/admin/categories', icon: Tag },
+            { name: 'Pengumuman', href: '/admin/announcements', icon: Bell },
+            { name: 'Agenda & Acara', href: '/admin/events', icon: Calendar },
+        ],
+    },
+    {
+        group: 'PROFIL & AKADEMIK',
+        items: [
+            { name: 'Guru & Staf', href: '/admin/teachers', icon: Users },
+            { name: 'Pengajuan Guru', href: '/admin/teacher-submissions', icon: UserCheck },
+            { name: 'Galeri Foto', href: '/admin/galleries', icon: Image },
+            { name: 'Prestasi Siswa', href: '/admin/achievements', icon: Trophy },
+            { name: 'Fasilitas Belajar', href: '/admin/facilities', icon: Building2 },
+            { name: 'Informasi PPDB', href: '/admin/ppdb', icon: GraduationCap },
+            { name: 'Pendaftar PPDB', href: '/admin/ppdb/pendaftar', icon: UserCheck },
+            { name: 'Dokumen & Berkas', href: '/admin/documents', icon: FileText },
+        ],
+    },
+    {
+        group: 'WEBSITE & SISTEM',
+        items: [
+            { name: 'Halaman Statis', href: '/admin/pages', icon: Files },
+            { name: 'Menu Navigasi', href: '/admin/menus', icon: MenuIcon },
+            { name: 'Pustaka Media', href: '/admin/media', icon: FolderKanban },
+            { name: 'Pengguna Admin', href: '/admin/users', icon: UserCheck },
+            { name: 'Identitas Sekolah', href: '/admin/settings', icon: Settings },
+            { name: 'DevTools & Sistem', href: '/admin/devtool', icon: Terminal },
+            { name: 'Lihat Web Publik', href: '/', icon: ExternalLink, external: true },
+        ],
+    },
+];
+
 export default function Sidebar({
     sidebarOpen: propSidebarOpen,
     setSidebarOpen: propSetSidebarOpen,
@@ -47,6 +90,17 @@ export default function Sidebar({
 
     const [logoutOpen, setLogoutOpen] = useState(false);
     const [isLoggingOut, setIsLoggingOut] = useState(false);
+    const navRef = React.useRef(null);
+
+    // Auto-scroll active item into view when url changes
+    React.useEffect(() => {
+        if (navRef.current) {
+            const activeEl = navRef.current.querySelector('[data-sidebar-active="true"]');
+            if (activeEl) {
+                activeEl.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+            }
+        }
+    }, [url]);
 
     const getInitials = (name) => {
         if (!name) return 'U';
@@ -60,52 +114,33 @@ export default function Sidebar({
     const isActive = (path) => {
         if (path === '/admin') return url === '/admin' || url === '/admin/';
         if (path === '/') return false;
-        return url.startsWith(path);
+
+        const currentPath = url.split('?')[0].replace(/\/$/, '');
+        const targetPath = path.split('?')[0].replace(/\/$/, '');
+
+        // Exact match
+        if (currentPath === targetPath) return true;
+
+        // Sub-route match (e.g. /admin/news/create under /admin/news)
+        if (currentPath.startsWith(`${targetPath}/`)) {
+            // Check if there is another navigation item with a closer/more specific prefix match
+            const allHrefs = NAVIGATION
+                .flatMap((g) => g.items.map((i) => i.href.split('?')[0].replace(/\/$/, '')))
+                .filter((h) => h !== targetPath);
+
+            const hasMoreSpecific = allHrefs.some(
+                (otherHref) =>
+                    otherHref.startsWith(`${targetPath}/`) &&
+                    (currentPath === otherHref || currentPath.startsWith(`${otherHref}/`))
+            );
+
+            return !hasMoreSpecific;
+        }
+
+        return false;
     };
 
-    const navigation = [
-        {
-            group: 'UTAMA',
-            items: [
-                { name: 'Dashboard', href: '/admin', icon: LayoutDashboard },
-            ],
-        },
-        {
-            group: 'KONTEN & PUBLIKASI',
-            items: [
-                { name: 'Berita Sekolah', href: '/admin/news', icon: Newspaper },
-                { name: 'Kategori Berita', href: '/admin/categories', icon: Tag },
-                { name: 'Pengumuman', href: '/admin/announcements', icon: Bell },
-                { name: 'Agenda & Acara', href: '/admin/events', icon: Calendar },
-            ],
-        },
-        {
-            group: 'PROFIL & AKADEMIK',
-            items: [
-                { name: 'Guru & Staf', href: '/admin/teachers', icon: Users },
-                { name: 'Pengajuan Guru', href: '/admin/teacher-submissions', icon: UserCheck },
-                { name: 'Galeri Foto', href: '/admin/galleries', icon: Image },
-                { name: 'Prestasi Siswa', href: '/admin/achievements', icon: Trophy },
-                { name: 'Fasilitas Belajar', href: '/admin/facilities', icon: Building2 },
-                { name: 'Informasi PPDB', href: '/admin/ppdb', icon: GraduationCap },
-                { name: 'Pendaftar PPDB', href: '/admin/ppdb/pendaftar', icon: UserCheck },
-                { name: 'Dokumen & Berkas', href: '/admin/documents', icon: FileText },
-            ],
-        },
-        {
-            group: 'WEBSITE & SISTEM',
-            items: [
-                { name: 'Halaman Statis', href: '/admin/pages', icon: Files },
-                { name: 'Menu Navigasi', href: '/admin/menus', icon: MenuIcon },
-                { name: 'Pustaka Media', href: '/admin/media', icon: FolderKanban },
-                { name: 'Pengguna Admin', href: '/admin/users', icon: UserCheck },
-                { name: 'Identitas Sekolah', href: '/admin/settings', icon: Settings },
-                { name: 'DevTools & Sistem', href: '/admin/devtool', icon: Terminal },
-                { name: 'Lihat Web Publik', href: '/', icon: ExternalLink, external: true },
-            ],
-        },
-    ];
-
+    const navigation = NAVIGATION;
     const portalSubtitle = 'Portal CMS Sekolah';
 
     return (
@@ -171,12 +206,13 @@ export default function Sidebar({
 
                     {/* Navigation Items */}
                     <nav
-                        className={`flex-1 overflow-y-auto overflow-x-hidden no-scrollbar ${
-                            sidebarCollapsed ? 'p-2 lg:px-2 lg:py-3 space-y-4' : 'p-4 space-y-6'
+                        ref={navRef}
+                        className={`flex-1 overflow-y-auto overflow-x-hidden scroll-smooth ${
+                            sidebarCollapsed ? 'p-2 lg:px-2 lg:py-3 space-y-4 pb-8' : 'p-4 space-y-5 pb-12'
                         }`}
                         style={{
-                            scrollbarWidth: 'none',
-                            msOverflowStyle: 'none',
+                            scrollbarWidth: 'thin',
+                            scrollbarColor: 'rgba(100, 116, 139, 0.35) transparent',
                         }}
                     >
                         {navigation.map((group, idx) => (
@@ -212,6 +248,7 @@ export default function Sidebar({
                                             <Component
                                                 key={item.name}
                                                 {...linkProps}
+                                                data-sidebar-active={active ? 'true' : 'false'}
                                                 onClick={() => setSidebarOpen(false)}
                                                 title={sidebarCollapsed ? item.name : undefined}
                                                 className={`flex items-center rounded-lg transition-colors group relative cursor-pointer ${
