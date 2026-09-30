@@ -21,6 +21,7 @@ import {
     ChevronRight,
     Loader2,
     ExternalLink,
+    Terminal,
 } from 'lucide-react';
 import { ConfirmDialog } from '@/Components/UI/ConfirmDialog';
 import Button from '@/Components/UI/Button';
@@ -99,6 +100,7 @@ export default function Sidebar({
                 { name: 'Pustaka Media', href: '/admin/media', icon: FolderKanban },
                 { name: 'Pengguna Admin', href: '/admin/users', icon: UserCheck },
                 { name: 'Identitas Sekolah', href: '/admin/settings', icon: Settings },
+                { name: 'DevTools & Sistem', href: '/admin/devtool', icon: Terminal },
                 { name: 'Lihat Web Publik', href: '/', icon: ExternalLink, external: true },
             ],
         },

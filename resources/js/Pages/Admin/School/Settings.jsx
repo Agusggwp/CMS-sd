@@ -16,6 +16,7 @@ import {
     BarChart3,
     Search,
     Save,
+    Clock,
 } from 'lucide-react';
 
 export default function SchoolSettings({ settings = {}, realStats = {} }) {
@@ -42,6 +43,11 @@ export default function SchoolSettings({ settings = {}, realStats = {} }) {
         school_email: settings.school_email || '',
         school_whatsapp: settings.school_whatsapp || '',
         school_maps: settings.school_maps || '',
+
+        // Operational Hours
+        school_hours_weekday: settings.school_hours_weekday ?? '07.00 - 15.00 WIB',
+        school_hours_saturday: settings.school_hours_saturday ?? '07.00 - 12.00 WIB',
+        school_hours_sunday: settings.school_hours_sunday ?? 'Tutup',
 
         // Social
         social_facebook: settings.social_facebook || '',
@@ -276,6 +282,45 @@ export default function SchoolSettings({ settings = {}, realStats = {} }) {
                             error={errors.school_maps}
                             helperText="Salin tautan 'src' dari fitur Embed Map di Google Maps."
                         />
+
+                        <div className="pt-4 border-t border-slate-100">
+                            <h3 className="text-sm font-bold text-slate-900 pb-2 flex items-center gap-2">
+                                <Clock className="w-4 h-4 text-blue-600" />
+                                Jam Operasional & Layanan Sekolah
+                            </h3>
+                            <p className="text-xs text-slate-500 mb-4">
+                                Atur jadwal jam buka sekolah yang akan tampil pada footer website dan halaman kontak.
+                            </p>
+                            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                                <Input
+                                    label="Senin - Jumat"
+                                    name="school_hours_weekday"
+                                    value={data.school_hours_weekday}
+                                    onChange={(e) => setData('school_hours_weekday', e.target.value)}
+                                    error={errors.school_hours_weekday}
+                                    placeholder="07.00 - 15.00 WIB"
+                                    helperText="Contoh: 07.00 - 15.00 WIB"
+                                />
+                                <Input
+                                    label="Sabtu"
+                                    name="school_hours_saturday"
+                                    value={data.school_hours_saturday}
+                                    onChange={(e) => setData('school_hours_saturday', e.target.value)}
+                                    error={errors.school_hours_saturday}
+                                    placeholder="07.00 - 12.00 WIB"
+                                    helperText="Contoh: 07.00 - 12.00 WIB (atau 'Tutup')"
+                                />
+                                <Input
+                                    label="Minggu & Hari Libur"
+                                    name="school_hours_sunday"
+                                    value={data.school_hours_sunday}
+                                    onChange={(e) => setData('school_hours_sunday', e.target.value)}
+                                    error={errors.school_hours_sunday}
+                                    placeholder="Tutup"
+                                    helperText="Contoh: Tutup / Libur"
+                                />
+                            </div>
+                        </div>
                     </div>
                 )}
 

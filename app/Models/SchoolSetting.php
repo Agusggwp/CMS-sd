@@ -129,6 +129,17 @@ class SchoolSetting extends Model
             // Silently continue
         }
 
+        // 5. Default Jam Operasional Sekolah
+        if (!isset($settings['school_hours_weekday']) || $settings['school_hours_weekday'] === '') {
+            $settings['school_hours_weekday'] = '07.00 - 15.00 WIB';
+        }
+        if (!isset($settings['school_hours_saturday']) || $settings['school_hours_saturday'] === '') {
+            $settings['school_hours_saturday'] = '07.00 - 12.00 WIB';
+        }
+        if (!isset($settings['school_hours_sunday']) || $settings['school_hours_sunday'] === '') {
+            $settings['school_hours_sunday'] = 'Tutup';
+        }
+
         return $settings;
     }
 

@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\AchievementController as AdminAchievementControll
 use App\Http\Controllers\Admin\AnnouncementController as AdminAnnouncementController;
 use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\DevToolController;
 use App\Http\Controllers\Admin\DocumentController as AdminDocumentController;
 use App\Http\Controllers\Admin\EventController as AdminEventController;
 use App\Http\Controllers\Admin\FacilityController as AdminFacilityController;
@@ -128,4 +129,10 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
     Route::resource('menus', AdminMenuController::class)->only(['index', 'store', 'update', 'destroy']);
     Route::resource('media', AdminMediaController::class)->only(['index', 'store', 'destroy']);
     Route::resource('users', AdminUserController::class)->except(['show']);
+
+    // Developer Tools & System Operations
+    Route::get('devtool', [DevToolController::class, 'index'])->name('devtool.index');
+    Route::post('devtool/execute', [DevToolController::class, 'execute'])->name('devtool.execute');
+    Route::post('devtool/clear-log', [DevToolController::class, 'clearLog'])->name('devtool.clear-log');
+    Route::get('devtool/refresh-logs', [DevToolController::class, 'refreshLogs'])->name('devtool.refresh-logs');
 });

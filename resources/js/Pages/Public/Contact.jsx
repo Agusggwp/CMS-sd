@@ -1,5 +1,5 @@
 import React from 'react';
-import { useForm } from '@inertiajs/react';
+import { useForm, usePage } from '@inertiajs/react';
 import PublicLayout from '@/Layouts/PublicLayout';
 import PageHeader from '@/Components/Public/PageHeader';
 import Input from '@/Components/UI/Input';
@@ -9,7 +9,30 @@ import Reveal from '@/Components/UI/Reveal';
 import { MapPin, Phone, Mail, Clock, Send, MessageCircle } from 'lucide-react';
 
 export default function Contact({ settings = {} }) {
-    const schoolName = settings.school_name || 'SD Negeri Percontohan';
+    const { school_settings = {} } = usePage().props;
+    const mergedSettings = { ...school_settings, ...settings };
+    const schoolName = mergedSettings.school_name || 'SD Negeri Percontohan';
+
+    const formatHours = (val, prefix) => {
+        if (!val) return '';
+        const trimmed = String(val).trim();
+        if (!trimmed) return '';
+        if (new RegExp(`^${prefix}`, 'i').test(trimmed)) {
+            return trimmed;
+        }
+        return `${prefix}: ${trimmed}`;
+    };
+
+    const weekdayHours = formatHours(mergedSettings.school_hours_weekday || '07.00 - 15.00 WIB', 'Senin - Jumat');
+    const saturdayHours = formatHours(
+        mergedSettings.school_hours_saturday !== undefined ? mergedSettings.school_hours_saturday : '07.00 - 12.00 WIB',
+        'Sabtu'
+    );
+    const sundaySetting = mergedSettings.school_hours_sunday;
+    const isSundayClosed = !sundaySetting || /^(tutup|libur)$/i.test(sundaySetting.trim());
+    const sundayHours = isSundayClosed 
+        ? 'Minggu & Hari Libur Nasional: Tutup'
+        : formatHours(sundaySetting, 'Minggu & Hari Libur');
 
     const { data, setData, post, processing, errors, reset, recentlySuccessful } = useForm({
         name: '',
@@ -120,10 +143,15 @@ export default function Contact({ settings = {} }) {
                                                 Jam Layanan Kantor
                                             </h4>
                                             <p className="mt-1 text-xs text-slate-600">
-                                                Senin - Jumat: 07.30 - 15.00 WIB
+                                                {weekdayHours}
                                             </p>
+                                            {saturdayHours && (
+                                                <p className="text-xs text-slate-600">
+                                                    {saturdayHours}
+                                                </p>
+                                            )}
                                             <p className="text-xs text-slate-500">
-                                                Sabtu, Minggu & Hari Libur Nasional: Tutup
+                                                {sundayHours}
                                             </p>
                                         </div>
                                     </div>

@@ -46,6 +46,22 @@ export default function Footer() {
     const npsn = school_settings.school_npsn || '50102030';
     const accreditation = school_settings.school_accreditation || 'A (Unggul)';
 
+    const formatHours = (val, prefix) => {
+        if (!val) return '';
+        const trimmed = String(val).trim();
+        if (!trimmed) return '';
+        if (new RegExp(`^${prefix}`, 'i').test(trimmed)) {
+            return trimmed;
+        }
+        return `${prefix}: ${trimmed}`;
+    };
+
+    const weekdayHours = formatHours(school_settings.school_hours_weekday || '07.00 - 15.00 WIB', 'Senin - Jumat');
+    const saturdayHours = formatHours(
+        school_settings.school_hours_saturday !== undefined ? school_settings.school_hours_saturday : '07.00 - 12.00 WIB',
+        'Sabtu'
+    );
+
     return (
         <footer className="bg-slate-900 text-slate-300 pt-16 pb-10 border-t border-slate-800">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -142,9 +158,12 @@ export default function Footer() {
                                 <Mail className="w-4 h-4 text-amber-400 shrink-0" />
                                 <span>{email}</span>
                             </li>
-                            <li className="flex items-center gap-2.5">
-                                <Globe className="w-4 h-4 text-indigo-400 shrink-0" />
-                                <span>Senin - Jumat: 07.00 - 15.00 WIB</span>
+                            <li className="flex items-start gap-2.5">
+                                <Globe className="w-4 h-4 text-indigo-400 shrink-0 mt-0.5" />
+                                <div className="flex flex-col space-y-0.5">
+                                    <span>{weekdayHours}</span>
+                                    {saturdayHours && <span>{saturdayHours}</span>}
+                                </div>
                             </li>
                         </ul>
                     </div>
