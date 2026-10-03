@@ -5,12 +5,21 @@ import Reveal from '@/Components/UI/Reveal';
 import { Award, BookOpen, ShieldCheck, Heart, User, CheckCircle2 } from 'lucide-react';
 
 export default function About({ settings = {}, principal = null }) {
-    const schoolName = settings.school_name || 'SD Negeri Percontohan';
+    const schoolName = settings.school_name || 'SD Negeri 4 Sebatu';
+
+    const historyBadge = settings.history_badge || 'Sejarah & Perkembangan';
+    const historyTitle = settings.history_title || 'Lebih dari Dua Dekade Mengabdi untuk Masa Depan Pendidikan Indonesia';
+    const historyP1 = settings.history_paragraph_1 || `Didirikan sejak tahun 2001, ${schoolName} lahir dari tekad kuat untuk menyediakan wadah pembelajaran sekolah dasar negeri yang inklusif, berkualitas tinggi, serta mampu memadukan kecerdasan intelektual, emosional, dan spiritual anak.`;
+    const historyP2 = settings.history_paragraph_2 || 'Melalui implementasi Kurikulum Merdeka dan Program Sekolah Penggerak, kami menciptakan ekosistem belajar yang menyenangkan, menstimulasi nalar kritis, dan menjunjung tinggi nilai-nilai Profil Pelajar Pancasila.';
+    const historyPhoto = settings.history_photo || 'https://images.unsplash.com/photo-1577896851231-70ef18881754?auto=format&fit=crop&w=1000&q=80';
 
     return (
         <PublicLayout
             title="Tentang Kami"
             description={`Profil, sejarah singkat, dan komitmen ${schoolName} dalam mendidik anak bangsa.`}
+            breadcrumbs={[
+                { name: 'Tentang Kami', url: '/tentang' },
+            ]}
         >
             {/* Header Banner */}
             <PageHeader
@@ -26,34 +35,38 @@ export default function About({ settings = {}, principal = null }) {
                         <div className="lg:col-span-6 space-y-5">
                             <Reveal direction="up">
                                 <span className="text-xs font-bold uppercase tracking-wider text-blue-600">
-                                    Sejarah & Perkembangan
+                                    {historyBadge}
                                 </span>
                                 <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight leading-snug mt-1">
-                                    Lebih dari Dua Dekade Mengabdi untuk Masa Depan Pendidikan Indonesia
+                                    {historyTitle}
                                 </h2>
                             </Reveal>
 
-                            <Reveal direction="up" delay={100}>
-                                <p className="text-sm text-slate-600 leading-relaxed">
-                                    Didirikan sejak tahun 2001, {schoolName} lahir dari tekad kuat untuk menyediakan wadah pembelajaran sekolah dasar negeri yang inklusif, berkualitas tinggi, serta mampu memadukan kecerdasan intelektual, emosional, dan spiritual anak.
-                                </p>
-                            </Reveal>
+                            {historyP1 && (
+                                <Reveal direction="up" delay={100}>
+                                    <p className="text-sm text-slate-600 leading-relaxed whitespace-pre-line">
+                                        {historyP1}
+                                    </p>
+                                </Reveal>
+                            )}
 
-                            <Reveal direction="up" delay={150}>
-                                <p className="text-sm text-slate-600 leading-relaxed">
-                                    Melalui implementasi Kurikulum Merdeka dan Program Sekolah Penggerak, kami menciptakan ekosistem belajar yang menyenangkan, menstimulasi nalar kritis, dan menjunjung tinggi nilai-nilai Profil Pelajar Pancasila.
-                                </p>
-                            </Reveal>
+                            {historyP2 && (
+                                <Reveal direction="up" delay={150}>
+                                    <p className="text-sm text-slate-600 leading-relaxed whitespace-pre-line">
+                                        {historyP2}
+                                    </p>
+                                </Reveal>
+                            )}
 
                             <Reveal direction="up" delay={200}>
                                 <div className="pt-4 grid grid-cols-2 gap-4">
                                     <div className="p-4 rounded-xl bg-slate-50 border border-slate-100 hover-lift">
                                         <h4 className="font-bold text-slate-900 text-sm mb-1">Akreditasi Sekolah</h4>
-                                        <p className="text-xs text-emerald-600 font-semibold">{settings.school_accreditation || 'A (Unggul)'} oleh BAN-SM</p>
+                                        <p className="text-xs text-emerald-600 font-semibold">{settings.school_accreditation || 'B oleh BAN-SM'}</p>
                                     </div>
                                     <div className="p-4 rounded-xl bg-slate-50 border border-slate-100 hover-lift">
                                         <h4 className="font-bold text-slate-900 text-sm mb-1">Nomor Pokok Sekolah</h4>
-                                        <p className="text-xs text-blue-600 font-semibold">NPSN: {settings.school_npsn || '50102030'}</p>
+                                        <p className="text-xs text-blue-600 font-semibold">NPSN: {settings.school_npsn || '50101995'}</p>
                                     </div>
                                 </div>
                             </Reveal>
@@ -61,10 +74,10 @@ export default function About({ settings = {}, principal = null }) {
 
                         <div className="lg:col-span-6">
                             <Reveal direction="left" delay={200}>
-                                <div className="rounded-2xl overflow-hidden shadow-lg border border-slate-200 group hover-lift">
+                                <div className="rounded-2xl overflow-hidden shadow-lg border border-slate-200 group hover-lift bg-slate-100">
                                     <img
-                                        src="https://images.unsplash.com/photo-1577896851231-70ef18881754?auto=format&fit=crop&w=1000&q=80"
-                                        alt="Kegiatan Belajar Siswa"
+                                        src={historyPhoto}
+                                        alt={historyTitle}
                                         className="w-full h-96 object-cover group-hover:scale-105 transition-transform duration-700"
                                     />
                                 </div>
@@ -95,9 +108,9 @@ export default function About({ settings = {}, principal = null }) {
                                         )}
                                     </div>
                                     <h4 className="font-bold text-slate-900 text-sm mt-3">
-                                        {settings.principal_name}
+                                        {settings.principal_name || 'Kepala Sekolah'}
                                     </h4>
-                                    <p className="text-xs text-blue-600 font-medium">Kepala Sekolah</p>
+                                    <p className="text-xs text-blue-600 font-medium">{settings.principal_title || 'Kepala Sekolah'}</p>
                                 </div>
 
                                 <div className="flex-1 space-y-3">
@@ -105,7 +118,7 @@ export default function About({ settings = {}, principal = null }) {
                                         Pesan dari Kepala Sekolah
                                     </h3>
                                     <p className="text-xs sm:text-sm text-slate-600 leading-relaxed italic">
-                                        "{settings.principal_speech}"
+                                        "{settings.principal_speech || 'Selamat datang di website resmi SD Negeri 4 Sebatu.'}"
                                     </p>
                                 </div>
                             </div>

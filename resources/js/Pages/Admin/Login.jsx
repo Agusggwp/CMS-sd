@@ -2,12 +2,12 @@ import React from 'react';
 import { Head, useForm, Link } from '@inertiajs/react';
 import Input from '@/Components/UI/Input';
 import Button from '@/Components/UI/Button';
-import { GraduationCap, Lock, Mail, ArrowLeft, ShieldCheck } from 'lucide-react';
+import { GraduationCap, Lock, ArrowLeft } from 'lucide-react';
 
 export default function Login() {
     const { data, setData, post, processing, errors } = useForm({
-        email: 'admin@sdpercontohan.sch.id',
-        password: 'password123',
+        email: '',
+        password: '',
         remember: false,
     });
 
@@ -18,12 +18,12 @@ export default function Login() {
 
     return (
         <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-blue-950 flex flex-col justify-center py-12 sm:px-6 lg:px-8 px-4 font-sans text-slate-800">
-            <Head title="Masuk Portal Admin - CMS Sekolah" />
+            <Head title="Masuk Portal Admin - SD Negeri 4 Sebatu" />
 
             <div className="sm:mx-auto sm:w-full sm:max-w-md text-center">
                 <Link href="/" className="inline-flex items-center justify-center gap-3 group">
-                    <div className="w-12 h-12 rounded-2xl bg-blue-600 text-white flex items-center justify-center shadow-lg shadow-blue-500/30 group-hover:scale-105 transition-transform">
-                        <GraduationCap className="w-7 h-7 text-white" />
+                    <div className="w-14 h-14 rounded-2xl bg-white/10 backdrop-blur-md p-2 flex items-center justify-center shadow-lg shadow-blue-500/20 group-hover:scale-105 transition-transform border border-white/20">
+                        <img src="/logo.png" alt="Logo SD Negeri 4 Sebatu" className="w-full h-full object-contain" />
                     </div>
                 </Link>
                 <h2 className="mt-4 text-2xl font-extrabold text-white tracking-tight">
@@ -45,7 +45,7 @@ export default function Login() {
                             onChange={(e) => setData('email', e.target.value)}
                             error={errors.email}
                             required
-                            placeholder="admin@sdpercontohan.sch.id"
+                            placeholder="admin@sdn4sebatu.sch.id"
                             autoComplete="username"
                         />
 
@@ -86,20 +86,6 @@ export default function Login() {
                             </Button>
                         </div>
                     </form>
-
-                    {/* Demo credentials box */}
-                    <div className="mt-6 pt-5 border-t border-slate-100 bg-slate-50 p-3.5 rounded-xl text-xs text-slate-600 space-y-1">
-                        <div className="flex items-center gap-1.5 font-bold text-slate-800">
-                            <ShieldCheck className="w-4 h-4 text-blue-600" />
-                            <span>Akun Demo Administrator:</span>
-                        </div>
-                        <p className="text-[11px] text-slate-500">
-                            Email: <strong className="text-slate-700">admin@sdpercontohan.sch.id</strong>
-                        </p>
-                        <p className="text-[11px] text-slate-500">
-                            Kata Sandi: <strong className="text-slate-700">password123</strong>
-                        </p>
-                    </div>
 
                     <div className="mt-6 text-center">
                         <Link

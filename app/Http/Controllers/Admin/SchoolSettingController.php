@@ -26,7 +26,7 @@ class SchoolSettingController extends Controller
 
     public function update(Request $request): RedirectResponse
     {
-        $data = $request->except(['_token', 'school_logo', 'principal_photo', 'favicon']);
+        $data = $request->except(['_token', 'school_logo', 'principal_photo', 'favicon', 'history_photo']);
 
         // Handle file uploads
         if ($request->hasFile('school_logo')) {
@@ -45,6 +45,12 @@ class SchoolSettingController extends Controller
             $request->validate(['favicon' => 'image|mimes:png,ico,svg|max:1024']);
             $path = $request->file('favicon')->store('settings', 'public');
             SchoolSetting::set('favicon', '/storage/' . $path);
+        }
+
+        if ($request->hasFile('history_photo')) {
+            $request->validate(['history_photo' => 'image|mimes:jpeg,png,jpg,webp|max:4096']);
+            $path = $request->file('history_photo')->store('settings', 'public');
+            SchoolSetting::set('history_photo', '/storage/' . $path);
         }
 
         foreach ($data as $key => $val) {
