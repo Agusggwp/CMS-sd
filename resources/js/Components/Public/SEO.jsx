@@ -38,14 +38,14 @@ export default function SEO({
     
     const resolveImageUrl = (img) => {
         if (!img) {
-            return settings.school_logo ? (settings.school_logo.startsWith('http') ? settings.school_logo : `${DOMAIN}${settings.school_logo}`) : `${DOMAIN}/art.jpeg`;
+            return settings.school_logo ? (settings.school_logo.startsWith('http') ? settings.school_logo : `${DOMAIN}${settings.school_logo}`) : `${DOMAIN}/logo.png`;
         }
         if (img.startsWith('http')) return img;
         return `${DOMAIN}${img.startsWith('/') ? '' : '/'}${img}`;
     };
 
-    const ogImage = resolveImageUrl(image || settings.school_logo);
-    const logoUrl = resolveImageUrl(settings.school_logo);
+    const ogImage = resolveImageUrl(image || settings.school_logo || '/logo.png');
+    const logoUrl = resolveImageUrl(settings.school_logo || '/logo.png');
 
     // 1. ElementarySchool / EducationalOrganization Schema
     const schoolSchema = {
