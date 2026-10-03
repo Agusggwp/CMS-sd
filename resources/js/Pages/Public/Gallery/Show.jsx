@@ -16,6 +16,10 @@ export default function Show({ gallery, otherGalleries = [] }) {
             title={gallery.title}
             description={gallery.description}
             image={gallery.cover_image}
+            breadcrumbs={[
+                { name: 'Galeri', url: '/galeri' },
+                { name: gallery.title, url: `/galeri/${gallery.slug}` },
+            ]}
         >
             {/* Breadcrumb Bar */}
             <div className="bg-slate-100/70 border-b border-slate-200/60 py-3.5">

@@ -20,6 +20,12 @@ export default function Show({ article, relatedNews = [], categories = [] }) {
             title={article.title}
             description={article.excerpt}
             image={article.image}
+            type="article"
+            article={article}
+            breadcrumbs={[
+                { name: 'Berita', url: '/berita' },
+                { name: article.title, url: `/berita/${article.slug}` },
+            ]}
         >
             {/* Breadcrumb Bar */}
             <div className="bg-slate-100/70 border-b border-slate-200/60 py-3.5">
