@@ -313,6 +313,10 @@ export default function Navbar() {
                                 src={logoUrl}
                                 alt={rawSchoolName}
                                 className="w-13 h-13 sm:w-15 sm:h-15 object-contain transition-transform group-hover:scale-105"
+                                width="60"
+                                height="60"
+                                decoding="async"
+                                fetchPriority="high"
                             />
                         ) : (
                             <div className="transition-transform group-hover:scale-105 shrink-0">

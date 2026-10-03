@@ -74,6 +74,10 @@ export default function Footer() {
                                     src={school_settings.school_logo}
                                     alt={schoolName}
                                     className="w-11 h-11 object-contain shrink-0"
+                                    loading="lazy"
+                                    decoding="async"
+                                    width="44"
+                                    height="44"
                                 />
                             ) : (
                                 <div className="w-11 h-11 rounded-xl bg-slate-800 text-white flex items-center justify-center shrink-0 border border-slate-700">

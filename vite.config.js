@@ -18,6 +18,32 @@ export default defineConfig({
             '@': path.resolve(__dirname, './resources/js'),
         },
     },
+    build: {
+        target: 'es2020',
+        cssCodeSplit: true,
+        minify: 'esbuild',
+        rollupOptions: {
+            output: {
+                manualChunks(id) {
+                    if (id.includes('node_modules')) {
+                        if (id.includes('react') || id.includes('react-dom') || id.includes('scheduler')) {
+                            return 'vendor-react';
+                        }
+                        if (id.includes('@inertiajs')) {
+                            return 'vendor-inertia';
+                        }
+                        if (id.includes('lucide-react')) {
+                            return 'vendor-icons';
+                        }
+                        if (id.includes('axios')) {
+                            return 'vendor-axios';
+                        }
+                    }
+                },
+            },
+        },
+        chunkSizeWarningLimit: 1000,
+    },
     server: {
         watch: {
             ignored: ['**/storage/framework/views/**'],

@@ -16,6 +16,9 @@ export default function GalleryCard({ gallery }) {
                     alt={gallery.title}
                     className="w-full h-full object-cover group-hover:scale-108 transition-transform duration-700 ease-out"
                     loading="lazy"
+                    decoding="async"
+                    width="400"
+                    height="300"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-slate-950/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
                     <span className="text-white text-xs font-bold inline-flex items-center gap-1.5 bg-blue-600/90 px-3 py-1.5 rounded-xl shadow-md shadow-blue-600/30 backdrop-blur-xs">

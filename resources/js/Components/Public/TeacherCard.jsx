@@ -23,6 +23,9 @@ export default function TeacherCard({ teacher }) {
                                 alt={teacher.name}
                                 className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                                 loading="lazy"
+                                decoding="async"
+                                width="96"
+                                height="96"
                             />
                         ) : (
                             <div className="w-full h-full flex items-center justify-center bg-blue-50 text-blue-600">

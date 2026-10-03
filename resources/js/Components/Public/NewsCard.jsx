@@ -24,6 +24,9 @@ export default function NewsCard({ news, featured = false }) {
                     alt={news.title}
                     className="w-full h-full object-cover group-hover:scale-108 transition-transform duration-700 ease-out"
                     loading="lazy"
+                    decoding="async"
+                    width="400"
+                    height="250"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-950/60 via-slate-950/10 to-transparent opacity-60 group-hover:opacity-40 transition-opacity duration-300" />
                 

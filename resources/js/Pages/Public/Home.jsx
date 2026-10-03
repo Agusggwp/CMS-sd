@@ -66,6 +66,10 @@ export default function Home({
                                                     src={settings.principal_photo}
                                                     alt={principalName}
                                                     className="w-full h-full object-cover hover:scale-108 transition-transform duration-700 ease-out"
+                                                    loading="lazy"
+                                                    decoding="async"
+                                                    width="208"
+                                                    height="208"
                                                 />
                                             ) : (
                                                 <div className="w-full h-full flex items-center justify-center bg-blue-100 text-blue-600">

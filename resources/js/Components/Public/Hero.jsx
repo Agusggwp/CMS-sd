@@ -96,10 +96,13 @@ export default function Hero({ settings = {} }) {
                             <div className="relative rounded-3xl overflow-hidden bg-white shadow-2xl border-4 border-white p-2 hover-lift">
                                 <div className="relative rounded-2xl overflow-hidden">
                                     <img
-                                        src="https://images.unsplash.com/photo-1580582932707-520aed937b7b?auto=format&fit=crop&w=1000&q=80"
+                                        src="https://images.unsplash.com/photo-1580582932707-520aed937b7b?auto=format&fit=crop&w=800&q=80"
                                         alt="Aktivitas Belajar Sekolah Dasar"
                                         className="w-full h-80 sm:h-[420px] object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
-                                        loading="lazy"
+                                        fetchPriority="high"
+                                        decoding="async"
+                                        width="800"
+                                        height="533"
                                     />
                                     <div className="absolute inset-0 bg-gradient-to-t from-slate-950/60 via-transparent to-transparent opacity-60" />
 
