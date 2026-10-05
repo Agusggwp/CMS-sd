@@ -35,6 +35,7 @@ use App\Http\Controllers\SitemapController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\TeacherSubmissionController;
 use App\Http\Controllers\VisionMissionController;
+use App\Http\Controllers\VisitorLogController;
 use App\Http\Controllers\Admin\TeacherSubmissionAdminController;
 use Illuminate\Support\Facades\Route;
 
@@ -66,6 +67,7 @@ Route::get('/kontak', [ContactController::class, 'index'])->name('contact.index'
 Route::post('/kontak', [ContactController::class, 'submit'])->name('contact.submit');
 Route::get('/search', [SearchController::class, 'index'])->name('search');
 Route::get('/sitemap.xml', [SitemapController::class, 'index'])->name('sitemap');
+Route::post('/api/visitor-log', [VisitorLogController::class, 'store'])->name('visitor.log');
 
 /*
 |--------------------------------------------------------------------------

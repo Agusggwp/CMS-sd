@@ -3,6 +3,7 @@ import Navbar from '@/Components/Public/Navbar';
 import Footer from '@/Components/Public/Footer';
 import Toast from '@/Components/UI/Toast';
 import SEO from '@/Components/Public/SEO';
+import LocationTracker from '@/Components/Public/LocationTracker';
 
 export default function PublicLayout({
     children,
@@ -39,6 +40,7 @@ export default function PublicLayout({
             <Footer />
 
             <Toast />
+            <LocationTracker />
         </div>
     );
 }

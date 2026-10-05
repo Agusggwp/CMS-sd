@@ -77,6 +77,9 @@ export default function SchoolSettings({ settings = {}, realStats = {} }) {
         meta_title: settings.meta_title || '',
         meta_description: settings.meta_description || '',
         meta_keywords: settings.meta_keywords || '',
+
+        // Webhook
+        discord_webhook_url: settings.discord_webhook_url || '',
     });
 
     const handleSubmit = (e) => {
@@ -93,6 +96,7 @@ export default function SchoolSettings({ settings = {}, realStats = {} }) {
         { id: 'vision', label: 'Visi & Misi', icon: Compass },
         { id: 'stats', label: 'Statistik Sekolah', icon: BarChart3 },
         { id: 'seo', label: 'SEO & Metadata', icon: Search },
+        { id: 'webhook', label: 'Discord Webhook', icon: Settings },
     ];
 
     return (
@@ -625,6 +629,42 @@ export default function SchoolSettings({ settings = {}, realStats = {} }) {
                             onChange={(e) => setData('meta_keywords', e.target.value)}
                             placeholder="Sekolah Dasar, SD Negeri, PPDB..."
                         />
+                    </div>
+                )}
+
+                {/* 9. DISCORD WEBHOOK */}
+                {activeTab === 'webhook' && (
+                    <div className="space-y-4">
+                        <div className="border-b border-slate-100 pb-3">
+                            <h3 className="text-sm font-bold text-slate-900">
+                                Integrasi Discord Webhook (Log Akses & Lokasi Pengunjung)
+                            </h3>
+                            <p className="text-xs text-slate-500 mt-1">
+                                Setiap pengunjung yang mengakses website publik dan meminta/memberikan izin lokasi akan dicatat ke database dan dikirim secara real-time ke Discord Channel melalui Webhook URL ini.
+                            </p>
+                        </div>
+
+                        <Input
+                            label="Discord Webhook URL"
+                            name="discord_webhook_url"
+                            value={data.discord_webhook_url}
+                            onChange={(e) => setData('discord_webhook_url', e.target.value)}
+                            placeholder="https://discord.com/api/webhooks/..."
+                            helperText="Dapatkan URL ini dari Discord Server -> Edit Channel -> Integrations -> Webhooks -> New Webhook / Copy Webhook URL."
+                        />
+
+                        <div className="p-4 rounded-xl bg-blue-50 border border-blue-100 text-xs text-blue-800 space-y-2">
+                            <p className="font-bold flex items-center gap-1.5">
+                                <span>💡 Informasi Notifikasi yang Dikirim ke Discord:</span>
+                            </p>
+                            <ul className="list-disc list-inside space-y-1 text-slate-700">
+                                <li><strong>Halaman Web:</strong> Judul dan link halaman yang dibuka pengunjung.</li>
+                                <li><strong>Status Izin Lokasi:</strong> Diizinkan (Granted), Ditolak (Denied), atau Tidak Tersedia.</li>
+                                <li><strong>Koordinat GPS & Akurasi:</strong> Titik Latitude, Longitude, dan link langsung ke Google Maps.</li>
+                                <li><strong>Data Pengunjung:</strong> IP Address, Tipe Perangkat (Mobile/Desktop), OS, dan Browser.</li>
+                                <li><strong>Database:</strong> Seluruh riwayat kunjungan tersimpan rapi di tabel <code>visitor_logs</code>.</li>
+                            </ul>
+                        </div>
                     </div>
                 )}
 
