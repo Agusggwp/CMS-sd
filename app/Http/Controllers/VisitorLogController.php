@@ -34,8 +34,7 @@ class VisitorLogController extends Controller
         // Parse User Agent info
         $deviceInfo = $this->parseUserAgent($userAgent);
 
-        // Save to database
-        $log = VisitorLog::create([
+        $logData = [
             'ip_address' => $ip,
             'user_agent' => $userAgent,
             'device' => $deviceInfo['device'],
@@ -51,47 +50,90 @@ class VisitorLogController extends Controller
             'region' => $validated['region'] ?? null,
             'country' => $validated['country'] ?? null,
             'discord_notified' => false,
-        ]);
+        ];
 
-        // Send to Discord Webhook
-        $discordSent = $this->sendToDiscord($log);
+        // 1. Try to save to database
+        $log = null;
+        try {
+            $log = VisitorLog::create($logData);
+        } catch (\Throwable $e) {
+            Log::warning('Could not save visitor log to DB (continuing to Discord): ' . $e->getMessage());
+        }
 
-        if ($discordSent) {
-            $log->update(['discord_notified' => true]);
+        // 2. Send to Discord Webhook
+        $discordSent = $this->sendToDiscord($logData);
+
+        if ($discordSent && $log) {
+            try {
+                $log->update(['discord_notified' => true]);
+            } catch (\Throwable $e) {
+                // Ignore update error
+            }
         }
 
         return response()->json([
             'success' => true,
-            'log_id' => $log->id,
+            'log_id' => $log?->id,
             'discord_notified' => $discordSent,
+        ]);
+    }
+
+    /**
+     * Test endpoint to verify Discord Webhook configuration.
+     */
+    public function testWebhook(): JsonResponse
+    {
+        $logData = [
+            'ip_address' => request()->ip() ?: '127.0.0.1',
+            'user_agent' => request()->userAgent() ?: 'Test User Agent',
+            'device' => 'Desktop (Testing)',
+            'browser' => 'Browser (Testing)',
+            'os' => 'OS (Testing)',
+            'page_url' => url('/'),
+            'page_title' => 'SDN 4 Sebatu (Uji Coba Discord Webhook)',
+            'latitude' => -8.4239,
+            'longitude' => 115.2816,
+            'accuracy' => 5,
+            'status' => 'granted',
+        ];
+
+        $sent = $this->sendToDiscord($logData);
+
+        return response()->json([
+            'success' => $sent,
+            'message' => $sent ? 'Berhasil mengirim notifikasi uji coba ke Discord!' : 'Gagal mengirim ke Discord. Pastikan DISCORD_WEBHOOK_URL sudah diisi dengan benar di file .env atau pada menu Pengaturan Sekolah.',
         ]);
     }
 
     /**
      * Send Rich Embed notification to Discord Webhook.
      */
-    protected function sendToDiscord(VisitorLog $log): bool
+    protected function sendToDiscord(array|VisitorLog $log): bool
     {
+        $data = is_array($log) ? $log : $log->toArray();
+
         $webhookUrl = config('services.discord.webhook_url') 
             ?: env('DISCORD_WEBHOOK_URL') 
             ?: SchoolSetting::get('discord_webhook_url');
 
         if (empty($webhookUrl)) {
-            Log::info('Discord Webhook URL not configured. Visitor logged to DB: #' . $log->id);
+            Log::warning('Discord Webhook URL is EMPTY. Please set DISCORD_WEBHOOK_URL in .env or School Settings.');
             return false;
         }
 
         try {
-            $statusEmoji = match ($log->status) {
+            $status = $data['status'] ?? 'prompt';
+            $statusEmoji = match ($status) {
                 'granted' => '🟢 Lokasi Terdeteksi (Granted)',
                 'denied' => '🔴 Akses Lokasi Ditolak (Denied)',
                 'unavailable' => '🟡 Lokasi Tidak Tersedia',
                 'timeout' => '⏰ Waktu Permintaan Habis',
+                'cookie_accepted' => '🍪 Cookie & Lokasi Diterima',
                 default => '🔵 Akses Halaman Web',
             };
 
-            $color = match ($log->status) {
-                'granted' => 0x10B981, // Emerald Green
+            $color = match ($status) {
+                'granted', 'cookie_accepted' => 0x10B981, // Emerald Green
                 'denied' => 0xEF4444,  // Red
                 'unavailable', 'timeout' => 0xF59E0B, // Amber
                 default => 0x3B82F6,   // Blue
@@ -100,33 +142,36 @@ class VisitorLogController extends Controller
             $fields = [
                 [
                     'name' => '📄 Halaman Dikunjungi',
-                    'value' => "**" . ($log->page_title ?: 'SDN 4 Sebatu') . "**\n`" . ($log->page_url ?: '/') . "`",
+                    'value' => "**" . ($data['page_title'] ?? 'SDN 4 Sebatu') . "**\n`" . ($data['page_url'] ?? '/') . "`",
                     'inline' => false,
                 ],
                 [
-                    'name' => '📍 Status Izin Lokasi',
+                    'name' => '📍 Status Izin Lokasi / Cookie',
                     'value' => $statusEmoji,
                     'inline' => true,
                 ],
             ];
 
-            if ($log->latitude && $log->longitude) {
-                $gmapsLink = "https://www.google.com/maps?q={$log->latitude},{$log->longitude}";
+            if (!empty($data['latitude']) && !empty($data['longitude'])) {
+                $lat = $data['latitude'];
+                $lng = $data['longitude'];
+                $acc = round($data['accuracy'] ?? 0);
+                $gmapsLink = "https://www.google.com/maps?q={$lat},{$lng}";
                 $fields[] = [
                     'name' => '🗺️ Titik Koordinat GPS',
-                    'value' => "📍 Latitude: `{$log->latitude}`\n📍 Longitude: `{$log->longitude}`\n🎯 Akurasi: `±" . round($log->accuracy ?: 0) . " meter`\n👉 [**Buka Titik Lokasi di Google Maps**]({$gmapsLink})",
+                    'value' => "📍 Latitude: `{$lat}`\n📍 Longitude: `{$lng}`\n🎯 Akurasi: `±{$acc} meter`\n👉 [**Buka Titik Lokasi di Google Maps**]({$gmapsLink})",
                     'inline' => false,
                 ];
             }
 
             $fields[] = [
                 'name' => '🖥️ Informasi Pengunjung',
-                'value' => "• **IP Address:** `{$log->ip_address}`\n• **Perangkat:** `{$log->device}`\n• **Sistem Operasi:** `{$log->os}`\n• **Browser:** `{$log->browser}`",
+                'value' => "• **IP Address:** `" . ($data['ip_address'] ?? 'Unknown') . "`\n• **Perangkat:** `" . ($data['device'] ?? 'Desktop') . "`\n• **Sistem Operasi:** `" . ($data['os'] ?? 'Unknown') . "`\n• **Browser:** `" . ($data['browser'] ?? 'Unknown') . "`",
                 'inline' => false,
             ];
 
             $payload = [
-                'username' => 'SDN 4 Sebatu Visitor Bot',
+                'username' => 'SDN 4 Sebatu Monitor',
                 'avatar_url' => 'https://cdn-icons-png.flaticon.com/512/2991/2991148.png',
                 'embeds' => [
                     [
@@ -142,9 +187,14 @@ class VisitorLogController extends Controller
                 ],
             ];
 
-            $response = Http::timeout(5)->post($webhookUrl, $payload);
+            $response = Http::withoutVerifying()->timeout(6)->post($webhookUrl, $payload);
 
-            return $response->successful();
+            if ($response->failed()) {
+                Log::error('Discord Webhook error: ' . $response->status() . ' - ' . $response->body());
+                return false;
+            }
+
+            return true;
         } catch (\Throwable $e) {
             Log::error('Failed to send Discord webhook log: ' . $e->getMessage());
             return false;

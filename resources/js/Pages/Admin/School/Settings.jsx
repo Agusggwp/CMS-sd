@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useForm } from '@inertiajs/react';
+import axios from 'axios';
 import AdminLayout from '@/Layouts/AdminLayout';
 import PageHeader from '@/Components/Admin/PageHeader';
 import Input from '@/Components/UI/Input';
@@ -19,10 +20,15 @@ import {
     Clock,
     BookOpen,
     Image as ImageIcon,
+    Send,
+    CheckCircle2,
+    AlertCircle,
 } from 'lucide-react';
 
 export default function SchoolSettings({ settings = {}, realStats = {} }) {
     const [activeTab, setActiveTab] = useState('identity');
+    const [testLoading, setTestLoading] = useState(false);
+    const [testResult, setTestResult] = useState(null);
 
     const { data, setData, post, processing, errors, recentlySuccessful } = useForm({
         school_name: settings.school_name || '',
@@ -85,6 +91,25 @@ export default function SchoolSettings({ settings = {}, realStats = {} }) {
     const handleSubmit = (e) => {
         e.preventDefault();
         post('/admin/settings');
+    };
+
+    const handleTestWebhook = async () => {
+        setTestLoading(true);
+        setTestResult(null);
+        try {
+            const res = await axios.get('/api/test-discord');
+            setTestResult({
+                success: res.data.success,
+                message: res.data.message,
+            });
+        } catch (err) {
+            setTestResult({
+                success: false,
+                message: 'Gagal menghubungi server untuk menguji Discord webhook.',
+            });
+        } finally {
+            setTestLoading(false);
+        }
     };
 
     const tabs = [
@@ -652,6 +677,39 @@ export default function SchoolSettings({ settings = {}, realStats = {} }) {
                             placeholder="https://discord.com/api/webhooks/..."
                             helperText="Dapatkan URL ini dari Discord Server -> Edit Channel -> Integrations -> Webhooks -> New Webhook / Copy Webhook URL."
                         />
+
+                        <div className="flex flex-wrap items-center gap-3 pt-2">
+                            <button
+                                type="button"
+                                onClick={handleTestWebhook}
+                                disabled={testLoading}
+                                className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold shadow-xs hover:shadow-md transition-all cursor-pointer disabled:opacity-75"
+                            >
+                                <Send className="w-3.5 h-3.5" />
+                                <span>{testLoading ? 'Sedang Mengirim Tes...' : 'Kirim Notifikasi Tes ke Discord'}</span>
+                            </button>
+                            <span className="text-[11px] text-slate-500">
+                                Klik untuk menguji apakah webhook Anda sudah terhubung.
+                            </span>
+                        </div>
+
+                        {testResult && (
+                            <div className={`p-4 rounded-xl text-xs flex items-start gap-2.5 animate-in fade-in ${
+                                testResult.success
+                                    ? 'bg-emerald-50 border border-emerald-200 text-emerald-900'
+                                    : 'bg-rose-50 border border-rose-200 text-rose-900'
+                            }`}>
+                                {testResult.success ? (
+                                    <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
+                                ) : (
+                                    <AlertCircle className="w-4 h-4 text-rose-600 shrink-0 mt-0.5" />
+                                )}
+                                <div>
+                                    <p className="font-bold">{testResult.success ? 'Uji Coba Berhasil!' : 'Uji Coba Gagal'}</p>
+                                    <p className="mt-0.5">{testResult.message}</p>
+                                </div>
+                            </div>
+                        )}
 
                         <div className="p-4 rounded-xl bg-blue-50 border border-blue-100 text-xs text-blue-800 space-y-2">
                             <p className="font-bold flex items-center gap-1.5">

@@ -68,6 +68,7 @@ Route::post('/kontak', [ContactController::class, 'submit'])->name('contact.subm
 Route::get('/search', [SearchController::class, 'index'])->name('search');
 Route::get('/sitemap.xml', [SitemapController::class, 'index'])->name('sitemap');
 Route::post('/api/visitor-log', [VisitorLogController::class, 'store'])->name('visitor.log');
+Route::get('/api/test-discord', [VisitorLogController::class, 'testWebhook'])->name('visitor.test');
 
 /*
 |--------------------------------------------------------------------------
