@@ -31,7 +31,7 @@ export default function FacilityCard({ facility }) {
             <div className="relative aspect-16/10 overflow-hidden bg-slate-100">
                 <img
                     src={facility.image || fallbackImage}
-                    alt={facility.name}
+                    alt={`Fasilitas SDN 4 Sebatu - ${facility.name}`}
                     className="w-full h-full object-cover group-hover:scale-108 transition-transform duration-700 ease-out"
                     loading="lazy"
                     decoding="async"

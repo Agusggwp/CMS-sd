@@ -7,13 +7,13 @@ import Reveal from '@/Components/UI/Reveal';
 export default function Facilities({ facilities = [] }) {
     return (
         <PublicLayout
-            title="Fasilitas Sekolah"
-            description="Sarana dan prasarana penunjang kegiatan belajar mengajar yang lengkap dan modern."
+            title="Fasilitas SDN 4 Sebatu | Sarana & Prasarana Penunjang Belajar"
+            description="Sarana dan prasarana penunjang kegiatan belajar mengajar di SDN 4 Sebatu, Sebatu, Tegallalang, Gianyar, Bali."
         >
             <PageHeader
                 badge="Sarana & Prasarana"
-                title="Fasilitas Penunjang Belajar"
-                description="Lingkungan belajar representatif untuk menunjang aktivitas kognitif, fisik, dan pembentukan karakter anak."
+                title="Fasilitas SDN 4 Sebatu"
+                description="Sarana dan prasarana representatif penunjang aktivitas belajar, literasi, olahraga, dan karakter siswa di SDN 4 Sebatu, Tegallalang, Gianyar."
             />
 
             <section className="py-16 bg-white">

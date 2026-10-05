@@ -39,12 +39,12 @@ function YoutubeIcon(props) {
 export default function Footer() {
     const { school_settings = {} } = usePage().props;
 
-    const schoolName = school_settings.school_name || 'SD Negeri Percontohan';
-    const address = school_settings.school_address || 'Jl. Pendidikan No. 45, Kebon Jeruk, Jakarta Barat';
-    const phone = school_settings.school_phone || '(021) 567-8901';
-    const email = school_settings.school_email || 'info@sdpercontohan.sch.id';
-    const npsn = school_settings.school_npsn || '50102030';
-    const accreditation = school_settings.school_accreditation || 'A (Unggul)';
+    const schoolName = school_settings.school_name || 'SDN 4 Sebatu';
+    const address = school_settings.school_address || 'Banjar Sebatu, Desa Sebatu, Kecamatan Tegallalang, Kabupaten Gianyar, Bali 80561';
+    const phone = school_settings.school_phone || '(0361) 908-1234';
+    const email = school_settings.school_email || 'sdn4sebatu@gmail.com';
+    const npsn = school_settings.school_npsn || '50101995';
+    const accreditation = school_settings.school_accreditation || 'B (BAN-SM)';
 
     const formatHours = (val, prefix) => {
         if (!val) return '';
@@ -56,9 +56,9 @@ export default function Footer() {
         return `${prefix}: ${trimmed}`;
     };
 
-    const weekdayHours = formatHours(school_settings.school_hours_weekday || '07.00 - 15.00 WIB', 'Senin - Jumat');
+    const weekdayHours = formatHours(school_settings.school_hours_weekday || '07.00 - 14.00 WITA', 'Senin - Jumat');
     const saturdayHours = formatHours(
-        school_settings.school_hours_saturday !== undefined ? school_settings.school_hours_saturday : '07.00 - 12.00 WIB',
+        school_settings.school_hours_saturday !== undefined ? school_settings.school_hours_saturday : '07.00 - 12.00 WITA',
         'Sabtu'
     );
 
@@ -94,7 +94,7 @@ export default function Footer() {
 
                         <p className="text-xs text-slate-400 leading-relaxed">
                             {school_settings.school_description ||
-                                'Membimbing generasi penerus bangsa yang cerdas berfikir, luhur dalam pekerti, dan unggul dalam prestasi dengan lingkungan belajar ramah anak.'}
+                                'Membimbing generasi penerus bangsa yang berkarakter, berbudaya, cerdas berfikir, dan unggul dalam prestasi dengan lingkungan belajar ramah anak di Sebatu, Tegallalang, Gianyar, Bali.'}
                         </p>
 
                         <div className="pt-2 flex items-center gap-2">
@@ -112,23 +112,38 @@ export default function Footer() {
                         </h4>
                         <ul className="space-y-2.5 text-xs">
                             <li>
-                                <Link href="/tentang" className="hover:text-blue-400 transition-colors flex items-center gap-1">
-                                    Profil & Sejarah <ArrowUpRight className="w-3 h-3 text-slate-500" />
+                                <Link href="/profil" className="hover:text-blue-400 transition-colors flex items-center gap-1">
+                                    Profil SDN 4 Sebatu <ArrowUpRight className="w-3 h-3 text-slate-500" />
                                 </Link>
                             </li>
                             <li>
                                 <Link href="/visi-misi" className="hover:text-blue-400 transition-colors flex items-center gap-1">
-                                    Visi, Misi & Tujuan <ArrowUpRight className="w-3 h-3 text-slate-500" />
+                                    Visi, Misi & Nilai <ArrowUpRight className="w-3 h-3 text-slate-500" />
                                 </Link>
                             </li>
                             <li>
                                 <Link href="/guru" className="hover:text-blue-400 transition-colors flex items-center gap-1">
-                                    Tenaga Pendidik <ArrowUpRight className="w-3 h-3 text-slate-500" />
+                                    Guru & Tenaga Pendidik <ArrowUpRight className="w-3 h-3 text-slate-500" />
                                 </Link>
                             </li>
                             <li>
                                 <Link href="/berita" className="hover:text-blue-400 transition-colors flex items-center gap-1">
-                                    Kabar & Berita Terbaru <ArrowUpRight className="w-3 h-3 text-slate-500" />
+                                    Berita & Kegiatan <ArrowUpRight className="w-3 h-3 text-slate-500" />
+                                </Link>
+                            </li>
+                            <li>
+                                <Link href="/prestasi" className="hover:text-blue-400 transition-colors flex items-center gap-1">
+                                    Prestasi Siswa <ArrowUpRight className="w-3 h-3 text-slate-500" />
+                                </Link>
+                            </li>
+                            <li>
+                                <Link href="/galeri" className="hover:text-blue-400 transition-colors flex items-center gap-1">
+                                    Galeri Foto Sekolah <ArrowUpRight className="w-3 h-3 text-slate-500" />
+                                </Link>
+                            </li>
+                            <li>
+                                <Link href="/fasilitas" className="hover:text-blue-400 transition-colors flex items-center gap-1">
+                                    Fasilitas Sekolah <ArrowUpRight className="w-3 h-3 text-slate-500" />
                                 </Link>
                             </li>
                             <li>
@@ -137,8 +152,8 @@ export default function Footer() {
                                 </Link>
                             </li>
                             <li>
-                                <Link href="/dokumen" className="hover:text-blue-400 transition-colors flex items-center gap-1">
-                                    Unduh Dokumen & Panduan <ArrowUpRight className="w-3 h-3 text-slate-500" />
+                                <Link href="/kontak" className="hover:text-blue-400 transition-colors flex items-center gap-1">
+                                    Kontak & Alamat <ArrowUpRight className="w-3 h-3 text-slate-500" />
                                 </Link>
                             </li>
                         </ul>

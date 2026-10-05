@@ -17,8 +17,8 @@ export default function Show({ article, relatedNews = [], categories = [] }) {
 
     return (
         <PublicLayout
-            title={article.title}
-            description={article.excerpt}
+            title={`${article.title} | SDN 4 Sebatu`}
+            description={article.excerpt || `${article.title} - Informasi dan liputan kegiatan resmi SDN 4 Sebatu, Sebatu, Tegallalang, Gianyar.`}
             image={article.image}
             type="article"
             article={article}
@@ -81,7 +81,7 @@ export default function Show({ article, relatedNews = [], categories = [] }) {
                                     <div className="rounded-2xl overflow-hidden bg-slate-100 shadow-md">
                                         <img
                                             src={article.image}
-                                            alt={article.title}
+                                            alt={`Dokumentasi Berita SDN 4 Sebatu - ${article.title}`}
                                             className="w-full max-h-[480px] object-cover hover:scale-102 transition-transform duration-500"
                                         />
                                     </div>

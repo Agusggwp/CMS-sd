@@ -92,16 +92,16 @@ function SchoolEmblem({ className = "w-14 h-14" }) {
             
             {/* Circular Text Path */}
             <path id="circleTextPathTop" d="M 18,50 A 32,32 0 1,1 82,50" fill="none" />
-            <text fill="#FFFFFF" fontSize="6.2" fontWeight="bold" letterSpacing="1.2">
+            <text fill="#FFFFFF" fontSize="6" fontWeight="bold" letterSpacing="1.2">
                 <textPath href="#circleTextPathTop" startOffset="50%" textAnchor="middle">
-                    SEKOLAH DASAR NEGERI
+                    SD NEGERI 4 SEBATU
                 </textPath>
             </text>
             
             <path id="circleTextPathBottom" d="M 82,50 A 32,32 0 0,1 18,50" fill="none" />
-            <text fill="#FFC72C" fontSize="6" fontWeight="bold" letterSpacing="1">
+            <text fill="#FFC72C" fontSize="5.5" fontWeight="bold" letterSpacing="1">
                 <textPath href="#circleTextPathBottom" startOffset="50%" textAnchor="middle">
-                    PERCONTOHAN
+                    TEGALLALANG GIANYAR
                 </textPath>
             </text>
 
@@ -136,9 +136,9 @@ export default function Navbar() {
     const searchDebounceRef = useRef(null);
 
     // School Settings with defaults
-    const rawSchoolName = school_settings.school_name || 'SD Negeri Percontohan';
-    const phone = school_settings.school_phone || '(021) 567-8901';
-    const email = school_settings.school_email || 'info@sdpercontohan.sch.id';
+    const rawSchoolName = school_settings.school_name || 'SDN 4 Sebatu';
+    const phone = school_settings.school_phone || '(0361) 908-1234';
+    const email = school_settings.school_email || 'sdn4sebatu@gmail.com';
     const logoUrl = school_settings.school_logo || null;
 
     // Social Links
@@ -150,22 +150,22 @@ export default function Navbar() {
     const tiktokUrl = school_settings.social_tiktok || 'https://tiktok.com';
 
     // Parse brand name into Line 1 (blue) and Line 2 (orange)
-    let brandTop = 'SEKOLAH DASAR NEGERI';
-    let brandBottom = 'PERCONTOHAN';
+    let brandTop = 'SD NEGERI';
+    let brandBottom = '4 SEBATU';
 
     if (rawSchoolName) {
         const upper = rawSchoolName.toUpperCase();
-        if (upper.includes('PERCONTOHAN')) {
-            brandTop = 'SEKOLAH DASAR NEGERI';
-            brandBottom = 'PERCONTOHAN';
+        if (upper.includes('4 SEBATU')) {
+            brandTop = 'SD NEGERI';
+            brandBottom = '4 SEBATU';
         } else if (upper.startsWith('SD NEGERI ') || upper.startsWith('SEKOLAH DASAR NEGERI ')) {
-            brandTop = 'SEKOLAH DASAR NEGERI';
+            brandTop = 'SD NEGERI';
             brandBottom = upper.replace(/^(SD NEGERI |SEKOLAH DASAR NEGERI )/, '');
         } else if (upper.startsWith('SDN ')) {
-            brandTop = 'SEKOLAH DASAR NEGERI';
+            brandTop = 'SD NEGERI';
             brandBottom = upper.replace(/^SDN /, '');
         } else {
-            brandTop = 'SEKOLAH DASAR';
+            brandTop = 'SD NEGERI';
             brandBottom = upper;
         }
     }
@@ -176,7 +176,7 @@ export default function Navbar() {
         {
             label: 'Profil Kami',
             children: [
-                { label: 'Tentang Sekolah', href: '/tentang' },
+                { label: 'Profil Sekolah', href: '/profil' },
                 { label: 'Visi & Misi', href: '/visi-misi' },
                 { label: 'Guru & Tenaga Pendidik', href: '/guru' },
                 { label: 'Sarana & Prasarana', href: '/fasilitas' },
@@ -186,14 +186,14 @@ export default function Navbar() {
         {
             label: 'Unit Kerja',
             children: [
-                { label: 'Kurikulum & Pembelajaran', href: '/tentang#kurikulum' },
-                { label: 'Kesiswaan & Pembiasaan', href: '/tentang#kesiswaan' },
-                { label: 'Tata Usaha & Administrasi', href: '/tentang#tu' },
+                { label: 'Kurikulum & Pembelajaran', href: '/profil#kurikulum' },
+                { label: 'Kesiswaan & Pembiasaan', href: '/profil#kesiswaan' },
+                { label: 'Tata Usaha & Administrasi', href: '/profil#tu' },
                 { label: 'Sarana & Prasarana', href: '/fasilitas' },
             ],
         },
         { label: 'Agenda', href: '/agenda' },
-        { label: 'Ekstrakurikuler', href: '/tentang#ekskul' },
+        { label: 'Ekstrakurikuler', href: '/profil#ekskul' },
         { label: 'Berita & Info', href: '/berita' },
         { label: 'Perpustakaan Digital', href: '/dokumen' },
         { label: 'Galeri', href: '/galeri' },

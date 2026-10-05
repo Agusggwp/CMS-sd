@@ -28,13 +28,13 @@ export default function Achievements({ achievements = { data: [] }, filters = {}
 
     return (
         <PublicLayout
-            title="Prestasi Siswa & Sekolah"
-            description="Daftar kejuaraan dan capaian membanggakan siswa di bidang akademik, olahraga, dan seni."
+            title="Prestasi Siswa SDN 4 Sebatu | Capaian Akademik & Non-Akademik"
+            description="Daftar kejuaraan dan prestasi membanggakan siswa SDN 4 Sebatu di tingkat kecamatan Tegallalang, kabupaten Gianyar, Bali, hingga nasional."
         >
             <PageHeader
                 badge="Ruang Penghargaan"
-                title="Prestasi Siswa & Sekolah"
-                description="Bukti dedikasi, kerja keras, dan pembinaan potensi talenta terbaik peserta didik kami."
+                title="Prestasi Siswa SDN 4 Sebatu"
+                description="Bukti dedikasi, kerja keras, dan pembinaan potensi talenta peserta didik SDN 4 Sebatu di Desa Sebatu, Kecamatan Tegallalang, Gianyar."
             />
 
             <section className="py-16 bg-white">

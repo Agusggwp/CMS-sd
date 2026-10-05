@@ -92,13 +92,13 @@ export default function PPDB({ ppdb = null, settings = {}, flash = {} }) {
 
     return (
         <PublicLayout
-            title={`PPDB Tahun Pelajaran ${academicYear}`}
-            description={`Informasi dan formulir pendaftaran peserta didik baru (PPDB) ${schoolName} tahun ajaran ${academicYear}.`}
+            title={`PPDB SDN 4 Sebatu ${academicYear} | Pendaftaran Siswa Baru`}
+            description={`Informasi alur, jadwal, persyaratan, dan formulir pendaftaran PPDB online SDN 4 Sebatu tahun ajaran ${academicYear} di Sebatu, Tegallalang, Gianyar, Bali.`}
         >
             <PageHeader
                 badge="Penerimaan Siswa Baru"
-                title={`PPDB Tahun Pelajaran ${academicYear}`}
-                description={`Selamat datang di portal informasi dan pendaftaran calon peserta didik baru ${schoolName}.`}
+                title={`PPDB SDN 4 Sebatu TP ${academicYear}`}
+                description={`Portal informasi resmi dan formulir pendaftaran peserta didik baru (PPDB) SDN 4 Sebatu, Desa Sebatu, Kecamatan Tegallalang, Gianyar.`}
             />
 
             <section className="py-12 md:py-16 bg-white">

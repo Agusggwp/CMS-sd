@@ -44,6 +44,7 @@ use Illuminate\Support\Facades\Route;
 |--------------------------------------------------------------------------
 */
 Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/profil', [AboutController::class, 'index'])->name('profile');
 Route::get('/tentang', [AboutController::class, 'index'])->name('about');
 Route::get('/visi-misi', [VisionMissionController::class, 'index'])->name('vision-mission');
 Route::get('/guru', [TeacherController::class, 'index'])->name('teachers.index');

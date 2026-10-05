@@ -13,7 +13,7 @@ export default function GalleryCard({ gallery }) {
             <div className="relative aspect-4/3 overflow-hidden bg-slate-100">
                 <img
                     src={gallery.cover_image || fallbackImage}
-                    alt={gallery.title}
+                    alt={`Galeri Kegiatan SDN 4 Sebatu - ${gallery.title}`}
                     className="w-full h-full object-cover group-hover:scale-108 transition-transform duration-700 ease-out"
                     loading="lazy"
                     decoding="async"

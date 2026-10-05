@@ -5,21 +5,24 @@ import Reveal from '@/Components/UI/Reveal';
 import { Target, Compass, CheckCircle2, Award } from 'lucide-react';
 
 export default function VisionMission({ settings = {} }) {
-    const schoolName = settings.school_name || 'SD Negeri Percontohan';
-    const vision = settings.vision || 'Terwujudnya peserta didik yang beriman dan bertakwa, cerdas bernalar kritis, unggul dalam prestasi, serta berwawasan lingkungan dan global.';
-    const mission = settings.mission || "1. Menumbuhkan penghayatan nilai keagamaan.\n2. Melaksanakan pembelajaran inovatif dan berpusat pada siswa.\n3. Mengembangkan bakat, minat, dan kreativitas siswa.\n4. Membiasakan budaya literasi dan numerasi.\n5. Mewujudkan lingkungan sekolah sehat dan aman.";
+    const schoolName = settings.school_name || 'SD Negeri 4 Sebatu';
+    const vision = settings.vision || 'Terwujudnya peserta didik yang beriman dan bertakwa, cerdas bernalar kritis, unggul dalam prestasi, serta berwawasan lingkungan dan kearifan budaya lokal Bali.';
+    const mission = settings.mission || "1. Menumbuhkan penghayatan nilai keagamaan, budi pekerti, dan budaya luhur.\n2. Melaksanakan pembelajaran inovatif, aktif, dan ramah anak berpusat pada siswa.\n3. Mengembangkan bakat, minat, seni, dan kreativitas siswa secara optimal.\n4. Membiasakan budaya literasi, numerasi, dan nalar kritis.\n5. Mewujudkan lingkungan sekolah sehat, asri, aman, dan berwawasan lingkungan di Sebatu.";
 
     const missionItems = mission.split('\n').filter(Boolean);
 
     return (
         <PublicLayout
-            title="Visi & Misi"
-            description={`Visi, Misi, dan Nilai Utama ${schoolName}.`}
+            title="Visi dan Misi SDN 4 Sebatu | Nilai Karakter & Tujuan Pendidikan"
+            description="Visi, misi, dan nilai karakter Profil Pelajar Pancasila di SDN 4 Sebatu, Sebatu, Tegallalang, Gianyar, Bali. Menyiapkan generasi unggul dan berakhlak mulia."
+            breadcrumbs={[
+                { name: 'Visi & Misi', url: '/visi-misi' },
+            ]}
         >
             <PageHeader
                 badge="Landasan & Arah Pendidikan"
-                title="Visi & Misi Sekolah"
-                description={`Pedoman bagi setiap langkah pembinaan dan pembelajaran di ${schoolName}.`}
+                title="Visi & Misi SDN 4 Sebatu"
+                description={`Pedoman bagi setiap langkah pembinaan, pengajaran, dan pembentukan karakter peserta didik di ${schoolName}, Sebatu, Tegallalang.`}
             />
 
             <section className="py-16 bg-white">

@@ -16,13 +16,13 @@ export default function Announcements({ announcements = { data: [] }, filters = 
 
     return (
         <PublicLayout
-            title="Pengumuman Resmi"
-            description="Informasi dan pengumuman kedinasan resmi bagi orang tua murid dan peserta didik."
+            title="Pengumuman Resmi SDN 4 Sebatu | Informasi Sekolah Terkini"
+            description="Pemberitahuan dan pengumuman resmi SDN 4 Sebatu bagi orang tua, siswa, dan masyarakat Sebatu, Tegallalang, Gianyar."
         >
             <PageHeader
                 badge="Pemberitahuan"
-                title="Pengumuman Sekolah"
-                description="Pemberitahuan resmi terkait jadwal ujian, libur sekolah, serta kegiatan penting lainnya."
+                title="Pengumuman Resmi SDN 4 Sebatu"
+                description="Pemberitahuan kedinasan, agenda akademik, libur sekolah, serta informasi penting bagi warga sekolah SDN 4 Sebatu, Tegallalang, Gianyar."
             />
 
             <section className="py-16 bg-white">

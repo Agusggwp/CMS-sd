@@ -40,16 +40,16 @@ class SitemapController extends Controller
         // Static routes
         $staticPages = [
             ['url' => '', 'priority' => '1.0', 'changefreq' => 'daily'],
-            ['url' => '/berita', 'priority' => '0.9', 'changefreq' => 'daily'],
-            ['url' => '/ppdb', 'priority' => '0.9', 'changefreq' => 'daily'],
-            ['url' => '/tentang', 'priority' => '0.8', 'changefreq' => 'monthly'],
+            ['url' => '/profil', 'priority' => '0.9', 'changefreq' => 'weekly'],
             ['url' => '/visi-misi', 'priority' => '0.8', 'changefreq' => 'monthly'],
             ['url' => '/guru', 'priority' => '0.8', 'changefreq' => 'weekly'],
+            ['url' => '/berita', 'priority' => '0.9', 'changefreq' => 'daily'],
+            ['url' => '/prestasi', 'priority' => '0.8', 'changefreq' => 'weekly'],
+            ['url' => '/galeri', 'priority' => '0.8', 'changefreq' => 'weekly'],
+            ['url' => '/fasilitas', 'priority' => '0.7', 'changefreq' => 'monthly'],
+            ['url' => '/ppdb', 'priority' => '0.9', 'changefreq' => 'daily'],
             ['url' => '/pengumuman', 'priority' => '0.8', 'changefreq' => 'weekly'],
             ['url' => '/agenda', 'priority' => '0.8', 'changefreq' => 'weekly'],
-            ['url' => '/prestasi', 'priority' => '0.8', 'changefreq' => 'weekly'],
-            ['url' => '/fasilitas', 'priority' => '0.7', 'changefreq' => 'monthly'],
-            ['url' => '/galeri', 'priority' => '0.8', 'changefreq' => 'weekly'],
             ['url' => '/dokumen', 'priority' => '0.7', 'changefreq' => 'weekly'],
             ['url' => '/kontak', 'priority' => '0.8', 'changefreq' => 'monthly'],
         ];

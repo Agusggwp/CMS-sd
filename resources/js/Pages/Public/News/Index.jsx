@@ -27,13 +27,13 @@ export default function Index({ news = { data: [] }, categories = [], filters = 
 
     return (
         <PublicLayout
-            title="Berita & Artikel Sekolah"
-            description="Kumpulan berita resmi, liputan kegiatan siswa, dan prestasi sekolah dasar."
+            title="Berita & Kegiatan SDN 4 Sebatu | Kabar Pendidikan Terkini"
+            description="Kumpulan berita resmi, liputan kegiatan siswa, prestasi, dan informasi pendidikan SDN 4 Sebatu di Tegallalang, Gianyar, Bali."
         >
             <PageHeader
                 badge="Portal Berita"
-                title="Kabar & Berita Sekolah"
-                description="Ikuti perkembangan kegiatan, prestasi membanggakan, dan wawasan pendidikan terkini."
+                title="Berita & Kegiatan SDN 4 Sebatu"
+                description="Ikuti liputan kegiatan belajar, prestasi siswa, dan kabar informasi pendidikan resmi SDN 4 Sebatu, Sebatu, Tegallalang, Gianyar."
             />
 
             <section className="py-16 bg-white">

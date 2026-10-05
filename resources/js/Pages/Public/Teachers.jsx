@@ -17,13 +17,13 @@ export default function Teachers({ teachers = { data: [] }, filters = {} }) {
 
     return (
         <PublicLayout
-            title="Guru & Tenaga Kependidikan"
-            description="Daftar tenaga pendidik profesional dan staf sekolah yang berdedikasi."
+            title="Guru dan Tenaga Kependidikan SDN 4 Sebatu | Pendidik Profesional"
+            description="Daftar profil dewan guru dan tenaga kependidikan SDN 4 Sebatu di Sebatu, Tegallalang, Gianyar. Pendidik berdedikasi tinggi untuk generasi penerus bangsa."
         >
             <PageHeader
                 badge="Sumber Daya Manusia"
-                title="Guru & Tenaga Kependidikan"
-                description="Pendidik berpengalaman dan berdedikasi tinggi yang mendampingi tumbuh kembang putra-putri Anda."
+                title="Guru & Tenaga Kependidikan SDN 4 Sebatu"
+                description="Profil guru dan tenaga kependidikan SDN 4 Sebatu, Desa Sebatu, Kecamatan Tegallalang, Gianyar yang berdedikasi membimbing dan mendidik putra-putri bangsa."
             />
 
             <section className="py-16 bg-white">

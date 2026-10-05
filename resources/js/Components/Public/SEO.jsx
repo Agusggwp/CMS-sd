@@ -12,6 +12,7 @@ export default function SEO({
     canonical,
     article = null,
     breadcrumbs = null,
+    faq = null,
     noindex = false,
 }) {
     const { url, props } = usePage();
@@ -19,16 +20,22 @@ export default function SEO({
 
     const schoolName = settings.school_name || 'SD Negeri 4 Sebatu';
     const defaultDescription = settings.meta_description || 
-        'Website Resmi SD Negeri 4 Sebatu, Kecamatan Tegallalang, Kabupaten Gianyar, Bali. Menyajikan informasi profil sekolah, PPDB online, prestasi siswa, guru, agenda, dan berita terkini.';
+        'SDN 4 Sebatu merupakan sekolah dasar negeri di Sebatu, Tegallalang, Gianyar, Bali yang menyediakan informasi profil sekolah, kegiatan, berita, prestasi, guru, dan informasi pendidikan.';
     
     const defaultKeywords = settings.meta_keywords || 
-        'SDN 4 Sebatu, SD Negeri 4 Sebatu, Sekolah Dasar Negeri 4 Sebatu, SD Sebatu Gianyar Bali, PPDB SDN 4 Sebatu, Website Resmi SDN 4 Sebatu, Sekolah Dasar Tegallalang Bali';
+        'SDN 4 Sebatu, SD 4 Sebatu, SD Sebatu, SD Tegallalang, SD Negeri 4 Sebatu, sekolah dasar Sebatu, sekolah di Sebatu, SD negeri di Sebatu, SD di Tegallalang, sekolah dasar Tegallalang, SDN Sebatu, SD Sebatu Tegallalang, pendidikan Sebatu, sekolah dasar Gianyar, SD negeri Gianyar, sekolah dasar di Gianyar Bali, SD Negeri 4 Sebatu Tegallalang, SDN 4 Sebatu Tegallalang Gianyar, alamat SDN 4 Sebatu, profil SDN 4 Sebatu, informasi SDN 4 Sebatu, SD 4 Sebatu Gianyar, SD Sebatu Gianyar Bali';
 
     // Page title logic
-    const siteTitle = settings.meta_title || schoolName;
-    const fullTitle = title 
-        ? (title.toLowerCase() === 'beranda' || title === schoolName ? `${schoolName} - Unggul & Berkarakter` : `${title} | ${schoolName}`)
-        : `${schoolName} - Website Resmi Sekolah`;
+    let fullTitle = `${schoolName} | SD Negeri di Sebatu, Tegallalang, Gianyar`;
+    if (title) {
+        if (title.includes('|') || title.includes(' - ')) {
+            fullTitle = title;
+        } else if (title.toLowerCase() === 'beranda' || title === schoolName) {
+            fullTitle = 'SDN 4 Sebatu | SD Negeri di Sebatu, Tegallalang, Gianyar';
+        } else {
+            fullTitle = `${title} | ${schoolName}`;
+        }
+    }
 
     const metaDescription = description || defaultDescription;
     const metaKeywords = keywords ? `${keywords}, ${defaultKeywords}` : defaultKeywords;
@@ -47,18 +54,24 @@ export default function SEO({
     const ogImage = resolveImageUrl(image || settings.school_logo || '/logo.png');
     const logoUrl = resolveImageUrl(settings.school_logo || '/logo.png');
 
-    // 1. ElementarySchool / EducationalOrganization Schema
+    // 1. ElementarySchool / EducationalOrganization Schema (Local SEO Bali)
     const schoolSchema = {
         '@context': 'https://schema.org',
-        '@type': 'ElementarySchool',
+        '@type': ['ElementarySchool', 'EducationalOrganization'],
         '@id': `${DOMAIN}/#school`,
         name: schoolName,
-        alternateName: 'SDN 4 Sebatu',
+        alternateName: [
+            'SDN 4 Sebatu',
+            'SD 4 Sebatu',
+            'SD Sebatu',
+            'SD Negeri 4 Sebatu Tegallalang',
+            'SDN 4 Sebatu Tegallalang Gianyar',
+        ],
         url: DOMAIN,
         logo: logoUrl,
         image: ogImage,
         description: defaultDescription,
-        telephone: settings.school_phone || '+62-812-3456-7890',
+        telephone: settings.school_phone || '(0361) 908-1234',
         email: settings.school_email || 'info@sdn4sebatu.sch.id',
         address: {
             '@type': 'PostalAddress',
@@ -70,13 +83,20 @@ export default function SEO({
         },
         geo: {
             '@type': 'GeoCoordinates',
-            latitude: '-8.4124',
-            longitude: '115.2891',
+            latitude: '-8.4239',
+            longitude: '115.2816',
         },
+        areaServed: [
+            { '@type': 'AdministrativeArea', name: 'Sebatu' },
+            { '@type': 'AdministrativeArea', name: 'Tegallalang' },
+            { '@type': 'AdministrativeArea', name: 'Gianyar' },
+            { '@type': 'AdministrativeArea', name: 'Bali' },
+        ],
         sameAs: [
             settings.social_facebook,
             settings.social_instagram,
             settings.social_youtube,
+            settings.social_tiktok,
         ].filter(Boolean),
     };
 
@@ -86,13 +106,14 @@ export default function SEO({
         '@type': 'WebSite',
         '@id': `${DOMAIN}/#website`,
         url: DOMAIN,
-        name: schoolName,
+        name: 'SDN 4 Sebatu',
+        alternateName: schoolName,
         publisher: {
             '@id': `${DOMAIN}/#school`,
         },
         potentialAction: {
             '@type': 'SearchAction',
-            target: `${DOMAIN}/berita?search={search_term_string}`,
+            target: `${DOMAIN}/search?q={search_term_string}`,
             'query-input': 'required name=search_term_string',
         },
     };
@@ -147,7 +168,24 @@ export default function SEO({
                     url: logoUrl,
                 },
             },
-            articleSection: article.category?.name || 'Berita Sekolah',
+            articleSection: article.category?.name || 'Berita Sekolah SDN 4 Sebatu',
+        };
+    }
+
+    // 5. FAQPage Schema
+    let faqSchema = null;
+    if (faq && faq.length > 0) {
+        faqSchema = {
+            '@context': 'https://schema.org',
+            '@type': 'FAQPage',
+            mainEntity: faq.map((item) => ({
+                '@type': 'Question',
+                name: item.question,
+                acceptedAnswer: {
+                    '@type': 'Answer',
+                    text: item.answer,
+                },
+            })),
         };
     }
 
@@ -166,6 +204,12 @@ export default function SEO({
             ) : (
                 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
             )}
+
+            {/* Regional & Geo Tags for Local SEO */}
+            <meta name="geo.region" content="ID-BA" />
+            <meta name="geo.placename" content="Sebatu, Tegallalang, Gianyar, Bali" />
+            <meta name="geo.position" content="-8.4239;115.2816" />
+            <meta name="ICBM" content="-8.4239, 115.2816" />
 
             {/* Open Graph / Facebook */}
             <meta property="og:type" content={type} />
@@ -218,6 +262,11 @@ export default function SEO({
             {articleSchema && (
                 <script type="application/ld+json">
                     {JSON.stringify(articleSchema)}
+                </script>
+            )}
+            {faqSchema && (
+                <script type="application/ld+json">
+                    {JSON.stringify(faqSchema)}
                 </script>
             )}
         </Head>

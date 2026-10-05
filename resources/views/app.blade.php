@@ -10,9 +10,9 @@
             $schoolSettings = $pageProps['school_settings'] ?? [];
             
             $schoolName = $schoolSettings['school_name'] ?? 'SD Negeri 4 Sebatu';
-            $metaTitle = $schoolSettings['meta_title'] ?? ($schoolName . ' - Portal Resmi Sekolah Dasar');
-            $metaDesc = $schoolSettings['meta_description'] ?? 'Website Resmi SD Negeri 4 Sebatu, Kecamatan Tegallalang, Kabupaten Gianyar, Bali. Informasi Penerimaan Peserta Didik Baru (PPDB Online), Berita Sekolah, Guru & Staf, Prestasi Siswa, dan Agenda Kegiatan.';
-            $metaKeywords = $schoolSettings['meta_keywords'] ?? 'SDN 4 Sebatu, SD Negeri 4 Sebatu, Sekolah Dasar Negeri 4 Sebatu, SD Sebatu Tegallalang Gianyar Bali, PPDB SDN 4 Sebatu, Website Resmi SDN 4 Sebatu';
+            $metaTitle = $schoolSettings['meta_title'] ?? 'SDN 4 Sebatu | SD Negeri di Sebatu, Tegallalang, Gianyar';
+            $metaDesc = $schoolSettings['meta_description'] ?? 'SDN 4 Sebatu merupakan sekolah dasar negeri di Sebatu, Tegallalang, Gianyar, Bali yang menyediakan informasi profil sekolah, kegiatan, berita, prestasi, guru, dan informasi pendidikan.';
+            $metaKeywords = $schoolSettings['meta_keywords'] ?? 'SDN 4 Sebatu, SD 4 Sebatu, SD Sebatu, SD Tegallalang, SD Negeri 4 Sebatu, sekolah dasar Sebatu, sekolah di Sebatu, SD negeri di Sebatu, SD di Tegallalang, sekolah dasar Tegallalang, sekolah negeri Tegallalang, SDN Sebatu, SD Sebatu Tegallalang, pendidikan Sebatu, sekolah dasar Gianyar, SD negeri Gianyar, sekolah dasar di Gianyar Bali, SD Negeri 4 Sebatu Tegallalang, SDN 4 Sebatu Tegallalang Gianyar, alamat SDN 4 Sebatu, profil SDN 4 Sebatu, informasi SDN 4 Sebatu, SD 4 Sebatu Gianyar, SD Sebatu Gianyar Bali, sekolah dasar dekat Tegallalang';
 
             // Canonical & Absolute URL
             $currentPath = request()->path();
@@ -68,10 +68,12 @@
         <meta name="googlebot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
         <meta name="bingbot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
         
-        <!-- Regional & Geographic Directives -->
+        <!-- Regional & Geographic Directives (Local SEO Bali) -->
         <meta name="language" content="id">
         <meta name="geo.region" content="ID-BA">
         <meta name="geo.placename" content="Sebatu, Tegallalang, Gianyar, Bali">
+        <meta name="geo.position" content="-8.4239;115.2816">
+        <meta name="ICBM" content="-8.4239, 115.2816">
         <meta name="theme-color" content="#2563eb">
         <meta name="msapplication-TileColor" content="#2563eb">
 

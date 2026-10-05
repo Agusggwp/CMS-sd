@@ -16,13 +16,13 @@ export default function Documents({ documents = { data: [] }, filters = {} }) {
 
     return (
         <PublicLayout
-            title="Unduh Dokumen Publik"
-            description="Pusat unduhan berkas panduan, kalender pendidikan, dan formulir resmi sekolah."
+            title="Unduh Dokumen Publik SDN 4 Sebatu | Berkas Resmi Sekolah"
+            description="Pusat unduhan dokumen resmi, formulir, panduan akademik, dan kalender pendidikan SDN 4 Sebatu di Tegallalang, Gianyar, Bali."
         >
             <PageHeader
                 badge="Pusat Unduhan"
-                title="Dokumen & Berkas Publik"
-                description="Akses berkas kurikulum, kalender pendidikan, formulir, dan pedoman resmi sekolah."
+                title="Dokumen & Berkas Publik SDN 4 Sebatu"
+                description="Akses dan unduh berkas kurikulum, kalender pendidikan, tata tertib, dan formulir resmi SDN 4 Sebatu, Tegallalang, Gianyar."
             />
 
             <section className="py-16 bg-white">

@@ -13,8 +13,8 @@ export default function Show({ gallery, otherGalleries = [] }) {
 
     return (
         <PublicLayout
-            title={gallery.title}
-            description={gallery.description}
+            title={`${gallery.title} | Galeri SDN 4 Sebatu`}
+            description={gallery.description || `Album foto dokumentasi ${gallery.title} di SDN 4 Sebatu, Desa Sebatu, Kecamatan Tegallalang, Gianyar, Bali.`}
             image={gallery.cover_image}
             breadcrumbs={[
                 { name: 'Galeri', url: '/galeri' },
@@ -64,7 +64,7 @@ export default function Show({ gallery, otherGalleries = [] }) {
                                 >
                                     <img
                                         src={img.image}
-                                        alt={img.caption || gallery.title}
+                                        alt={img.caption ? `Foto ${img.caption} - SDN 4 Sebatu` : `Dokumentasi ${gallery.title} - SDN 4 Sebatu`}
                                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                                         loading="lazy"
                                     />

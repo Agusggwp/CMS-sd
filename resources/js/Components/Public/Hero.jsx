@@ -3,9 +3,9 @@ import { Link } from '@inertiajs/react';
 import { GraduationCap, ArrowRight, Award, Users, BookOpen, Sparkles, CheckCircle2 } from 'lucide-react';
 
 export default function Hero({ settings = {} }) {
-    const schoolName = settings.school_name || 'SD Negeri Percontohan';
-    const slogan = settings.school_slogan || 'Membentuk Generasi Cerdas, Berkarakter, dan Berakhlak Mulia';
-    const description = settings.school_description || 'Sekolah Dasar ramah anak yang mengedepankan pembentukan budi pekerti luhur, kemandirian berfikir kritis, dan eksplorasi minat bakat siswa dengan fasilitas edukasi modern.';
+    const schoolName = settings.school_name || 'SD Negeri 4 Sebatu';
+    const slogan = settings.school_slogan || 'Membentuk Generasi Cerdas, Berkarakter, Berbudaya, dan Berakhlak Mulia';
+    const description = settings.school_description || 'SDN 4 Sebatu merupakan salah satu sekolah dasar negeri yang berada di wilayah Sebatu, Kecamatan Tegallalang, Kabupaten Gianyar, Bali. Menyediakan lingkungan belajar ramah anak, berakar pada kearifan lokal Bali, dan berorientasi pada Profil Pelajar Pancasila.';
 
     return (
         <section className="relative overflow-hidden bg-gradient-to-b from-blue-50/60 via-white to-slate-50/80 pt-16 pb-20 md:pt-24 md:pb-28 border-b border-slate-200/60">
@@ -23,18 +23,18 @@ export default function Hero({ settings = {} }) {
                         <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/90 text-blue-900 text-xs font-bold border border-blue-200 shadow-xs backdrop-blur-md animate-fade-in-down">
                             <span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping inline-block" />
                             <Award className="w-3.5 h-3.5 text-blue-600" />
-                            <span>Sekolah Penggerak & Akreditasi {settings.school_accreditation || 'A (Unggul)'}</span>
+                            <span>Sekolah Dasar Negeri di Sebatu, Tegallalang, Gianyar</span>
                         </div>
 
                         {/* Title & Slogan */}
                         <div className="animate-fade-in-up">
                             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-slate-900 tracking-tight leading-[1.12]">
-                                Selamat Datang di <br />
-                                <span className="bg-gradient-to-r from-blue-700 via-indigo-600 to-sky-600 bg-clip-text text-transparent">
-                                    {schoolName}
+                                SDN 4 Sebatu
+                                <span className="block text-xl sm:text-2xl md:text-3xl font-extrabold bg-gradient-to-r from-blue-700 via-indigo-600 to-sky-600 bg-clip-text text-transparent mt-2">
+                                    Sekolah Dasar Negeri di Sebatu, Tegallalang, Gianyar
                                 </span>
                             </h1>
-                            <p className="mt-4 text-base sm:text-lg md:text-xl font-semibold text-slate-700 leading-snug">
+                            <p className="mt-4 text-base sm:text-lg font-semibold text-slate-700 leading-snug">
                                 {slogan}
                             </p>
                         </div>
@@ -50,14 +50,14 @@ export default function Hero({ settings = {} }) {
                                 href="/ppdb"
                                 className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white text-sm font-bold shadow-lg shadow-emerald-600/25 hover:shadow-xl hover:shadow-emerald-600/35 hover:-translate-y-0.5 active:translate-y-0 transition-all cursor-pointer"
                             >
-                                <span>Informasi PPDB 2026</span>
+                                <span>Informasi PPDB SDN 4 Sebatu</span>
                                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1" />
                             </Link>
                             <Link
-                                href="/tentang"
+                                href="/profil"
                                 className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl bg-white hover:bg-slate-50 text-slate-800 hover:text-blue-600 text-sm font-bold border border-slate-300/80 shadow-xs hover:border-blue-400 hover:shadow-md hover:-translate-y-0.5 active:translate-y-0 transition-all cursor-pointer"
                             >
-                                <span>Profil Sekolah</span>
+                                <span>Profil SDN 4 Sebatu</span>
                             </Link>
                         </div>
 
@@ -97,7 +97,7 @@ export default function Hero({ settings = {} }) {
                                 <div className="relative rounded-2xl overflow-hidden">
                                     <img
                                         src="https://images.unsplash.com/photo-1580582932707-520aed937b7b?auto=format&fit=crop&w=800&q=80"
-                                        alt="Aktivitas Belajar Sekolah Dasar"
+                                        alt="Aktivitas Belajar dan Pendidikan Siswa SDN 4 Sebatu di Tegallalang Gianyar"
                                         className="w-full h-80 sm:h-[420px] object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
                                         fetchPriority="high"
                                         decoding="async"

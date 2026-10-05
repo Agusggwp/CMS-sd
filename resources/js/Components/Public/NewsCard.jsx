@@ -21,7 +21,7 @@ export default function NewsCard({ news, featured = false }) {
             <div className="relative overflow-hidden aspect-16/10 bg-slate-100">
                 <img
                     src={news.image || fallbackImage}
-                    alt={news.title}
+                    alt={`Kegiatan SDN 4 Sebatu - ${news.title}`}
                     className="w-full h-full object-cover group-hover:scale-108 transition-transform duration-700 ease-out"
                     loading="lazy"
                     decoding="async"

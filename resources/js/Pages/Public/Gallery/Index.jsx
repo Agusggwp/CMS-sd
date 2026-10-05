@@ -8,13 +8,13 @@ import Reveal from '@/Components/UI/Reveal';
 export default function Index({ galleries = { data: [] } }) {
     return (
         <PublicLayout
-            title="Galeri Dokumentasi"
-            description="Dokumentasi foto kegiatan belajar mengajar, lomba, dan pembiasaan karakter sekolah."
+            title="Galeri Kegiatan SDN 4 Sebatu | Dokumentasi Foto Sekolah"
+            description="Dokumentasi foto kegiatan belajar, pembiasaan karakter, ekstrakurikuler, dan upacara di SDN 4 Sebatu, Sebatu, Tegallalang, Gianyar, Bali."
         >
             <PageHeader
                 badge="Dokumentasi Visual"
-                title="Galeri Kegiatan Siswa"
-                description="Momen-momen berharga dan keceriaan siswa dalam berbagai aktivitas sekolah."
+                title="Galeri Kegiatan SDN 4 Sebatu"
+                description="Momen berharga, kreativitas, dan keceriaan siswa dalam berbagai aktivitas di lingkungan SDN 4 Sebatu, Tegallalang, Gianyar."
             />
 
             <section className="py-16 bg-white">

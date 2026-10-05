@@ -51,13 +51,13 @@ export default function Contact({ settings = {} }) {
 
     return (
         <PublicLayout
-            title="Hubungi Kami"
-            description={`Kontak resmi, alamat lokasi, dan layanan informasi publik ${schoolName}.`}
+            title="Kontak & Alamat SDN 4 Sebatu | Sebatu, Tegallalang, Gianyar"
+            description="Alamat resmi, peta lokasi Google Maps, nomor telepon, WhatsApp, dan layanan kontak SDN 4 Sebatu di Desa Sebatu, Kecamatan Tegallalang, Gianyar, Bali."
         >
             <PageHeader
                 badge="Layanan Informasi"
-                title="Hubungi Kami"
-                description="Kami selalu terbuka untuk berdialog dengan orang tua murid, masyarakat, dan mitra pendidikan."
+                title="Kontak & Lokasi Resmi SDN 4 Sebatu"
+                description="Layanan informasi publik, alamat lengkap, kontak WhatsApp resmi, dan peta lokasi SDN 4 Sebatu di Desa Sebatu, Kecamatan Tegallalang, Gianyar, Bali."
             />
 
             <section className="py-16 bg-white">

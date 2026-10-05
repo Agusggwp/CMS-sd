@@ -16,13 +16,13 @@ export default function Events({ upcomingEvents = { data: [] }, pastEvents = [],
 
     return (
         <PublicLayout
-            title="Agenda & Kegiatan Sekolah"
-            description="Jadwal kegiatan akademik, ekstrakurikuler, dan peringatan hari besar sekolah."
+            title="Agenda & Kegiatan SDN 4 Sebatu | Kalender Pendidikan"
+            description="Jadwal agenda kegiatan belajar, upacara, pembiasaan karakter, dan acara sekolah SDN 4 Sebatu di Tegallalang, Gianyar, Bali."
         >
             <PageHeader
                 badge="Kalender Kegiatan"
-                title="Agenda & Acara Sekolah"
-                description="Jadwal agenda mendatang serta rekam jejak kegiatan yang telah terlaksana."
+                title="Agenda & Kegiatan SDN 4 Sebatu"
+                description="Jadwal kegiatan akademik, pembinaan siswa, dan peringatan hari besar di SDN 4 Sebatu, Sebatu, Tegallalang, Gianyar."
             />
 
             <section className="py-16 bg-white">
