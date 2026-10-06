@@ -13,7 +13,7 @@ export default function VisionMission({ settings = {} }) {
 
     return (
         <PublicLayout
-            title="Visi dan Misi SDN 4 Sebatu | Nilai Karakter & Tujuan Pendidikan"
+            title="Visi & Misi SDN 4 Sebatu | Tujuan Pendidikan SD Sebatu"
             description="Visi, misi, dan nilai karakter Profil Pelajar Pancasila di SDN 4 Sebatu, Sebatu, Tegallalang, Gianyar, Bali. Menyiapkan generasi unggul dan berakhlak mulia."
             breadcrumbs={[
                 { name: 'Visi & Misi', url: '/visi-misi' },

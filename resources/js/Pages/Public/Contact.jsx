@@ -51,7 +51,7 @@ export default function Contact({ settings = {} }) {
 
     return (
         <PublicLayout
-            title="Kontak & Alamat SDN 4 Sebatu | Sebatu, Tegallalang, Gianyar"
+            title="Kontak & Lokasi | SDN 4 Sebatu"
             description="Alamat resmi, peta lokasi Google Maps, nomor telepon, WhatsApp, dan layanan kontak SDN 4 Sebatu di Desa Sebatu, Kecamatan Tegallalang, Gianyar, Bali."
         >
             <PageHeader

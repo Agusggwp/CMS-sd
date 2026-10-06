@@ -89,8 +89,9 @@ export default function Search({
 
     return (
         <PublicLayout
-            title={query ? `Hasil Pencarian: "${query}"` : 'Pencarian Portal'}
-            description="Pencarian informasi di seluruh halaman website sekolah tanpa refresh."
+            title={query ? `Hasil Pencarian: "${query}" | SDN 4 Sebatu` : 'Pencarian Informasi | SDN 4 Sebatu'}
+            description="Pencarian informasi profil, berita, agenda, dewan guru, dan dokumen di website SDN 4 Sebatu, Tegallalang, Gianyar."
+            noindex={true}
         >
             <PageHeader title="Pencarian Portal Sekolah">
                 <Reveal animation="fade-in-down" className="mt-6 max-w-xl mx-auto">

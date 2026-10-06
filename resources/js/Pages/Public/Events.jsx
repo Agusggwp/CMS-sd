@@ -16,7 +16,7 @@ export default function Events({ upcomingEvents = { data: [] }, pastEvents = [],
 
     return (
         <PublicLayout
-            title="Agenda & Kegiatan SDN 4 Sebatu | Kalender Pendidikan"
+            title="Agenda & Kegiatan Sekolah | SDN 4 Sebatu"
             description="Jadwal agenda kegiatan belajar, upacara, pembiasaan karakter, dan acara sekolah SDN 4 Sebatu di Tegallalang, Gianyar, Bali."
         >
             <PageHeader

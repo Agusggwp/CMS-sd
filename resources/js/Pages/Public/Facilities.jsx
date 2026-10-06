@@ -7,7 +7,7 @@ import Reveal from '@/Components/UI/Reveal';
 export default function Facilities({ facilities = [] }) {
     return (
         <PublicLayout
-            title="Fasilitas SDN 4 Sebatu | Sarana & Prasarana Penunjang Belajar"
+            title="Fasilitas & Sarana Prasarana | SDN 4 Sebatu"
             description="Sarana dan prasarana penunjang kegiatan belajar mengajar di SDN 4 Sebatu, Sebatu, Tegallalang, Gianyar, Bali."
         >
             <PageHeader

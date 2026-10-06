@@ -27,7 +27,7 @@ export default function Index({ news = { data: [] }, categories = [], filters = 
 
     return (
         <PublicLayout
-            title="Berita & Kegiatan SDN 4 Sebatu | Kabar Pendidikan Terkini"
+            title="Berita & Kegiatan | SDN 4 Sebatu"
             description="Kumpulan berita resmi, liputan kegiatan siswa, prestasi, dan informasi pendidikan SDN 4 Sebatu di Tegallalang, Gianyar, Bali."
         >
             <PageHeader

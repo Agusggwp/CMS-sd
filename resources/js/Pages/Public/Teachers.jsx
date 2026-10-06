@@ -17,7 +17,7 @@ export default function Teachers({ teachers = { data: [] }, filters = {} }) {
 
     return (
         <PublicLayout
-            title="Guru dan Tenaga Kependidikan SDN 4 Sebatu | Pendidik Profesional"
+            title="Guru & Tenaga Kependidikan | SDN 4 Sebatu"
             description="Daftar profil dewan guru dan tenaga kependidikan SDN 4 Sebatu di Sebatu, Tegallalang, Gianyar. Pendidik berdedikasi tinggi untuk generasi penerus bangsa."
         >
             <PageHeader

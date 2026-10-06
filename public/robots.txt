@@ -2,8 +2,25 @@ User-agent: *
 Allow: /
 Disallow: /admin/
 Disallow: /admin
-Disallow: /search?*
+Disallow: /search
 Disallow: /guru/daftar
+Disallow: /api/
+
+User-agent: Googlebot
+Allow: /
+Disallow: /admin/
+Disallow: /admin
+Disallow: /search
+Disallow: /guru/daftar
+Disallow: /api/
+
+User-agent: Bingbot
+Allow: /
+Disallow: /admin/
+Disallow: /admin
+Disallow: /search
+Disallow: /guru/daftar
+Disallow: /api/
 
 # Host and Sitemap
 Host: https://sdn4sebatu.sch.id

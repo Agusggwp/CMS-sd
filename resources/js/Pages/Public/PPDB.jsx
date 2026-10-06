@@ -92,7 +92,7 @@ export default function PPDB({ ppdb = null, settings = {}, flash = {} }) {
 
     return (
         <PublicLayout
-            title={`PPDB SDN 4 Sebatu ${academicYear} | Pendaftaran Siswa Baru`}
+            title="PPDB SDN 4 Sebatu | Pendaftaran Siswa Baru SD Sebatu"
             description={`Informasi alur, jadwal, persyaratan, dan formulir pendaftaran PPDB online SDN 4 Sebatu tahun ajaran ${academicYear} di Sebatu, Tegallalang, Gianyar, Bali.`}
         >
             <PageHeader

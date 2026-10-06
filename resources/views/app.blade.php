@@ -10,12 +10,27 @@
             $schoolSettings = $pageProps['school_settings'] ?? [];
             
             $schoolName = $schoolSettings['school_name'] ?? 'SD Negeri 4 Sebatu';
-            $metaTitle = $schoolSettings['meta_title'] ?? 'SDN 4 Sebatu | SD Negeri di Sebatu, Tegallalang, Gianyar';
+            $routeTitles = [
+                'profil' => 'Profil SDN 4 Sebatu | Sekolah Dasar Sebatu Tegallalang',
+                'visi-misi' => 'Visi & Misi SDN 4 Sebatu | Tujuan Pendidikan SD Sebatu',
+                'guru' => 'Guru & Tenaga Kependidikan | SDN 4 Sebatu',
+                'berita' => 'Berita & Kegiatan | SDN 4 Sebatu',
+                'prestasi' => 'Prestasi Siswa & Sekolah | SDN 4 Sebatu',
+                'galeri' => 'Galeri Kegiatan | SDN 4 Sebatu',
+                'fasilitas' => 'Fasilitas & Sarana Prasarana | SDN 4 Sebatu',
+                'kontak' => 'Kontak & Lokasi | SDN 4 Sebatu',
+                'ppdb' => 'PPDB SDN 4 Sebatu | Pendaftaran Siswa Baru SD Sebatu',
+                'pengumuman' => 'Pengumuman Resmi | SDN 4 Sebatu',
+                'agenda' => 'Agenda & Kegiatan Sekolah | SDN 4 Sebatu',
+                'dokumen' => 'Dokumen & Informasi Publik | SDN 4 Sebatu',
+            ];
+
+            $currentPath = request()->path();
+            $metaTitle = $routeTitles[$currentPath] ?? ($schoolSettings['meta_title'] ?? 'SDN 4 Sebatu | SD Negeri di Sebatu, Tegallalang, Gianyar');
             $metaDesc = $schoolSettings['meta_description'] ?? 'SDN 4 Sebatu merupakan sekolah dasar negeri di Sebatu, Tegallalang, Gianyar, Bali yang menyediakan informasi profil sekolah, kegiatan, berita, prestasi, guru, dan informasi pendidikan.';
-            $metaKeywords = $schoolSettings['meta_keywords'] ?? 'SDN 4 Sebatu, SD 4 Sebatu, SD Sebatu, SD Tegallalang, SD Negeri 4 Sebatu, sekolah dasar Sebatu, sekolah di Sebatu, SD negeri di Sebatu, SD di Tegallalang, sekolah dasar Tegallalang, sekolah negeri Tegallalang, SDN Sebatu, SD Sebatu Tegallalang, pendidikan Sebatu, sekolah dasar Gianyar, SD negeri Gianyar, sekolah dasar di Gianyar Bali, SD Negeri 4 Sebatu Tegallalang, SDN 4 Sebatu Tegallalang Gianyar, alamat SDN 4 Sebatu, profil SDN 4 Sebatu, informasi SDN 4 Sebatu, SD 4 Sebatu Gianyar, SD Sebatu Gianyar Bali, sekolah dasar dekat Tegallalang';
+            $metaKeywords = $schoolSettings['meta_keywords'] ?? 'SDN 4 Sebatu, SD 4 Sebatu, SD Sebatu, SD Tegallalang, SD Negeri 4 Sebatu, sekolah dasar Sebatu, sekolah di Sebatu, SD negeri di Sebatu, SD di Tegallalang, sekolah dasar Tegallalang, sekolah negeri Tegallalang, SDN Sebatu, SD Sebatu Tegallalang, pendidikan Sebatu, sekolah dasar Gianyar, SD negeri Gianyar, sekolah dasar di Gianyar Bali, SD Negeri 4 Sebatu Tegallalang, SDN 4 Sebatu Tegallalang Gianyar, alamat SDN 4 Sebatu, profil SDN 4 Sebatu, informasi SDN 4 Sebatu, SD 4 Sebatu Gianyar, SD Sebatu Gianyar Bali';
 
             // Canonical & Absolute URL
-            $currentPath = request()->path();
             $canonicalUrl = $currentPath === '/' ? 'https://sdn4sebatu.sch.id' : 'https://sdn4sebatu.sch.id/' . ltrim($currentPath, '/');
             
             // Image resolution for WhatsApp / Facebook / Telegram crawlers

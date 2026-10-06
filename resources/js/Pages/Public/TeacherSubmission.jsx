@@ -56,8 +56,9 @@ export default function TeacherSubmission({ formSetting }) {
 
     return (
         <PublicLayout
-            title={pageTitle}
+            title={`${pageTitle} | SDN 4 Sebatu`}
             description="Form pengisian data guru secara mandiri. Data akan ditampilkan setelah disetujui admin."
+            noindex={true}
         >
             {/* Latar belakang abu-ungu muda ala Google Forms */}
             <div className="min-h-screen bg-[#f0ebf8]">

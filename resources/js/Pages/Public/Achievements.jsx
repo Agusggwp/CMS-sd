@@ -28,7 +28,7 @@ export default function Achievements({ achievements = { data: [] }, filters = {}
 
     return (
         <PublicLayout
-            title="Prestasi Siswa SDN 4 Sebatu | Capaian Akademik & Non-Akademik"
+            title="Prestasi Siswa & Sekolah | SDN 4 Sebatu"
             description="Daftar kejuaraan dan prestasi membanggakan siswa SDN 4 Sebatu di tingkat kecamatan Tegallalang, kabupaten Gianyar, Bali, hingga nasional."
         >
             <PageHeader

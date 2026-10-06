@@ -15,6 +15,7 @@ export default function PublicLayout({
     canonical,
     article = null,
     breadcrumbs = null,
+    faq = null,
     noindex = false,
 }) {
     return (
@@ -28,6 +29,7 @@ export default function PublicLayout({
                 canonical={canonical}
                 article={article}
                 breadcrumbs={breadcrumbs}
+                faq={faq}
                 noindex={noindex}
             />
 

@@ -8,7 +8,7 @@ import Reveal from '@/Components/UI/Reveal';
 export default function Index({ galleries = { data: [] } }) {
     return (
         <PublicLayout
-            title="Galeri Kegiatan SDN 4 Sebatu | Dokumentasi Foto Sekolah"
+            title="Galeri Kegiatan | SDN 4 Sebatu"
             description="Dokumentasi foto kegiatan belajar, pembiasaan karakter, ekstrakurikuler, dan upacara di SDN 4 Sebatu, Sebatu, Tegallalang, Gianyar, Bali."
         >
             <PageHeader

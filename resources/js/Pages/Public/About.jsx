@@ -16,7 +16,7 @@ export default function About({ settings = {}, principal = null }) {
 
     return (
         <PublicLayout
-            title="Profil SDN 4 Sebatu | Sekolah Dasar Negeri di Sebatu, Tegallalang"
+            title="Profil SDN 4 Sebatu | Sekolah Dasar Sebatu Tegallalang"
             description="Profil resmi SDN 4 Sebatu di Desa Sebatu, Kecamatan Tegallalang, Gianyar, Bali. Informasi sejarah, visi dan misi, tujuan pendidikan, akreditasi, dan kepemimpinan sekolah."
             breadcrumbs={[
                 { name: 'Profil SDN 4 Sebatu', url: '/profil' },

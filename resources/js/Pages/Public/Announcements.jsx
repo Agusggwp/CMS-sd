@@ -16,7 +16,7 @@ export default function Announcements({ announcements = { data: [] }, filters = 
 
     return (
         <PublicLayout
-            title="Pengumuman Resmi SDN 4 Sebatu | Informasi Sekolah Terkini"
+            title="Pengumuman Resmi | SDN 4 Sebatu"
             description="Pemberitahuan dan pengumuman resmi SDN 4 Sebatu bagi orang tua, siswa, dan masyarakat Sebatu, Tegallalang, Gianyar."
         >
             <PageHeader

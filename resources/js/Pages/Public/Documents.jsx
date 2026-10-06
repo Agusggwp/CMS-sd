@@ -16,7 +16,7 @@ export default function Documents({ documents = { data: [] }, filters = {} }) {
 
     return (
         <PublicLayout
-            title="Unduh Dokumen Publik SDN 4 Sebatu | Berkas Resmi Sekolah"
+            title="Dokumen & Informasi Publik | SDN 4 Sebatu"
             description="Pusat unduhan dokumen resmi, formulir, panduan akademik, dan kalender pendidikan SDN 4 Sebatu di Tegallalang, Gianyar, Bali."
         >
             <PageHeader
